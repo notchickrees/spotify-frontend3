@@ -1,11 +1,5 @@
 import { useState } from "react";
-
-const login = {
-  width: "400px",
-  margin: "30px auto",
-  minHeight: "200px",
-  boxSizing: "border-box",
-};
+import "./Update_password.css"
 
 function UpdatePassword() {
   const [formInput, setFormInput] = useState({
@@ -53,70 +47,82 @@ function UpdatePassword() {
 
     setFormError(inputError);
   };
+  const buttonstyle={
+    fontFamily: "Bold",
+    margin: "10px",
+    padding: "10px 32px",
+    backgroundColor: "#1ed760",
+    borderRadius: "50px",
+    borderWidth: "1px",
+    borderColor: "white",
+    fontWeight: "600",
+    color: "black",
+    textDecoration: 'none',
+    alignText: "center",
+  };
+
+  const header={
+    fontFamily: "Bold",
+    padding: "30px",
+    fontSize: "40px"
+  }
 
   return (
     <div className="container my-3">
-      <div style={login}>
-        <div className="App-container">
-          <div className="card">
-            <div className="card-header">
-              <h4 className="title">Change Password</h4>
-            </div>
+      <h4 className="title text-center" style={header}>Reset Password</h4>
+      <div className="updatepassword">
+        <form
+          onSubmit={validateFormInput}
+          action="http://localhost:5000/form"
+          method="POST"
+        >
+          <p className="label mb-0">Old Password</p>
+          <input
+            name="password"
+            type="password"
+            className="form-control"
+            placeholder="Old Password"
+          />
+          <p className="error-message">{formError.email}</p>
 
-            <div className="card-body">
-              <form onSubmit={validateFormInput} action='http://localhost:5000/form' method='POST'>
-                <p className="label">Old Password</p>
-                <input
-                  name="password"
-                  type="password"
-                  className="input"
-                  placeholder="Old Password"
-                />
-                <p className="error-message">{formError.email}</p>
+          <p className="label mb-0">New Password</p>
+          <input
+            value={formInput.password}
+            onChange={({ target }) => {
+              handleUserInput(target.name, target.value);
+            }}
+            name="password"
+            type="password"
+            className="form-control"
+            placeholder="Password"
+          />
+          <p className="error-message">{formError.password}</p>
 
-                <p className="label">New Password</p>
-                <input
-                  value={formInput.password}
-                  onChange={({ target }) => {
-                    handleUserInput(target.name, target.value);
-                  }}
-                  name="password"
-                  type="password"
-                  className="input"
-                  placeholder="Password"
-                />
-                <p className="error-message">{formError.password}</p>
-
-                <p className="label">Confirm Password</p>
-                <input
-                  value={formInput.confirmPassword}
-                  onChange={({ target }) => {
-                    handleUserInput(target.name, target.value);
-                  }}
-                  name="confirmPassword"
-                  type="password"
-                  className="input"
-                  placeholder="Confirm Password"
-                />
-
-                <p className="error-message">{formError.confirmPassword}</p>
-
-                <div id="passwordHelpBlock" class="form-text">
-                  Your password must be 8-20 characters long, contain letters
-                  and numbers, and must not contain spaces, special characters,
-                  or emoji.
-                </div>
-                <div className="d-grid gap-2 col-3 mx-auto">
-                  <input
-                    type="submit"
-                    className="btn btn-primary my-3"
-                    value="Submit"
-                  />
-                </div>
-              </form>
-            </div>
+          <div className="form-outline"> 
+          <label className="form-label" htmlFor="form2Example2">Confirm Password</label>
+          <input
+            value={formInput.confirmPassword}
+            onChange={({ target }) => {
+              handleUserInput(target.name, target.value);
+            }}
+            name="confirmPassword"
+            type="password"
+            className="form-control"
+            placeholder="Confirm Password"
+          />
           </div>
-        </div>
+
+          <p className="error-message">{formError.confirmPassword}</p>
+
+          <div id="passwordHelpBlock" class="form-text">
+            Your password must be 8-20 characters long.
+          </div>
+          <div className="text-center">
+          <button type="submit" style={buttonstyle}>
+            Change Password
+          </button>
+          </div>
+        </form>
       </div>
     </div>
   );

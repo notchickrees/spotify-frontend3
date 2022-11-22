@@ -1,12 +1,32 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import axios from 'axios'
+import './Login.css'
 
 export default function Login() {
+  const buttonstyle={
+    fontFamily: "Bold",
+    margin: "10px",
+    padding: "10px 32px",
+    backgroundColor: "#1ed760",
+    borderRadius: "50px",
+    borderWidth: "1px",
+    borderColor: "white",
+    fontWeight: "600",
+    color: "black",
+    textDecoration: 'none',
+    alignText: "center",
+  };
+
   return (
-    <>
-    <h1 className='text-center my-5'>Welcome!</h1>
-    <div className="d-flex align-items-center justify-content-center">
+    <div className='loginpage'>
+    <div className="text-center my-4">
+    <img
+          src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png"
+          alt="spotify logo"
+    />
+    </div>
+    <hr />
+    <div className="d-flex align-items-center justify-content-center my-5">
       <form id="login" action='http://localhost:5000/form' method='POST'>
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="form2Example2">
@@ -37,24 +57,24 @@ export default function Login() {
             </div>
           </div>
 
-          <div className="col">
+          <div className="col text-right">
             <Link to="/updatepassword">
               <a href="#!">Forgot password?</a>
             </Link>
           </div>
         </div>
         <div className='text-center'>
-        <button type="submit" id= "Signin" className="btn btn-primary p-2 m-2">
-          Sign in
+        <button type="submit" id= "Signin" style={buttonstyle}>
+            Sign in
         </button>
         <Link to= "/register">
-          <button type="button" id= "Register" className="btn btn-primary p-2 m-2">
+          <button type="button" id= "Register" style={buttonstyle}>
             Register
           </button>
         </Link>
         </div>
       </form>
     </div>
-    </>
+    </div>
   )
 }

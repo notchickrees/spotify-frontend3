@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 function HomePage() {
   const buttonstyle={
+    fontFamily: "Bold",
     padding: "20px",
     backgroundColor: "#1db954",
     borderRadius: "50px",
@@ -20,7 +21,7 @@ function HomePage() {
           alt="spotify logo"
         />
         <Link to="/login">
-          <button style={buttonstyle}>LOGIN WITH SPOTIFY</button>
+          <button style={buttonstyle}>Login With Spotify</button>
         </Link>
       </div>
     </div>

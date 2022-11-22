@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-//import './style.css'
+import './registrationForm.css'
 function RegistrationForm() {
   const [userName, setUserName] = useState(null);
 
@@ -22,17 +22,38 @@ function RegistrationForm() {
     }
   };
 
+  const buttonstyle={
+    fontFamily: "Bold",
+    margin: "10px",
+    padding: "10px 32px",
+    backgroundColor: "#1ed760",
+    borderRadius: "50px",
+    borderWidth: "1px",
+    borderColor: "white",
+    fontWeight: "600",
+    color: "black",
+    textDecoration: 'none',
+    alignText: "center",
+  };
+
   return (
     <div>
-      <nav class="bg-dark navbar-dark navbar">
-        <div className="row col-12 d-flex justify-content-center text-white">
-          <h3 class="text-center">Sign up for your Spotify account</h3>{" "}
-        </div>
-      </nav>
-      <div className="container my-4 ">
-        <form onSubmit={checkValues} action='http://localhost:5000/form' method='POST'>
+      <div className="text-center my-4">
+      <img
+        src="https://storage.googleapis.com/pr-newsroom-wp/1/2018/11/Spotify_Logo_CMYK_Black.png"
+        alt="spotify logo"
+      />
+      <h2 id="header">Sign up for free to start <br /> listening.</h2>
+      </div>
+      <hr/>  
+      <div className="signupform">
+        <form
+          onSubmit={checkValues}
+          action="http://localhost:5000/form"
+          method="POST"
+        >
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">
+            <label for="exampleInputEmail1" class="form-label mb-0">
               Username
             </label>
             <input
@@ -49,7 +70,7 @@ function RegistrationForm() {
             </div>
           </div>
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">
+            <label for="exampleInputEmail1" class="form-label" className="mb-0">
               Email address
             </label>
             <input
@@ -66,14 +87,14 @@ function RegistrationForm() {
             </div>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">
+            <label for="exampleInputPassword1" class="form-label mb-0">
               Password
             </label>
             <input
               type="password"
               class="form-control"
               id="exampleInputPassword1"
-              name= "password"
+              name="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -82,7 +103,7 @@ function RegistrationForm() {
             </div>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">
+            <label for="exampleInputPassword1" class="form-label mb-0">
               Confirm Password
             </label>
             <input
@@ -96,9 +117,11 @@ function RegistrationForm() {
               Please retype your password.
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">
-            Submit
+          <div className="text-center">
+          <button type="submit" style={buttonstyle}>
+            Sign Up
           </button>
+          </div>
         </form>
       </div>
     </div>
