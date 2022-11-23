@@ -1,4 +1,6 @@
+// this is where pages are managed
 import React from "react";
+
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Login from "./Components/Login";
 import RegistrationForm from "./Components/registrationForm";
