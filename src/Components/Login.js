@@ -1,8 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Login.css'
+import axios from 'axios';
+
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  
+  function handleSubmit(e){
+    // e.preventDefault()
+    const data={
+      "username" : username,
+      "password" : password,
+    }
+    console.log(data);
+    axios.post("http://localhost:5000/form", data).then((res)=> console.log(res.data))
+  };
+
   const buttonstyle={
     fontFamily: "Bold",
     margin: "10px",
@@ -27,18 +42,18 @@ export default function Login() {
     </div>
     <hr />
     <div className="d-flex align-items-center justify-content-center my-5">
-      <form id="login" action='http://localhost:5000/form' method='POST'>
+      <form id="login">
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="form2Example2">
-            Email Address
+            Username
           </label>
-          <input type="email" id="form2Example1" name="email" className="form-control" />
+          <input type="email" id="form2Example1" name="email" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} />
         </div>
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="form2Example2">
             Password
           </label>
-          <input type="password" id="form2Example2" name="password" className="form-control"/>
+          <input type="password" id="form2Example2" name="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)}/>
         </div>
         <div className="row mb-4">
           <div className="col d-flex justify-content-center">
@@ -64,7 +79,7 @@ export default function Login() {
           </div>
         </div>
         <div className='text-center'>
-        <button type="submit" id= "Signin" style={buttonstyle}>
+        <button id= "Signin" style={buttonstyle} onClick={handleSubmit}>
             Sign in
         </button>
         <Link to= "/register">
