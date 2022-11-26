@@ -12,18 +12,29 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    const data = {
-      "email": email,
-      "password": password,
+    if (!email) {
+      alert("Email Cannot be empty");
+      setEmail("")
+      setPassword("")
+    } else if (!password) {
+      alert("Password Cannot be empty");
+      setEmail("")
+      setPassword("")
     }
-    const response = await axios.post("http://localhost:5000/loginform", data)
-    // setResponse(response.data)
-    console.log("reponse:", response.data)
-    if (response.data.body === "Success") {
-      navigate('/homepage')
-    }
-    else {
-      setMessage("Username or password not correct")
+    else{  
+      const data = {
+        "email": email,
+        "password": password,
+      }
+      
+      const response = await axios.post("http://localhost:5000/loginform", data)
+      console.log("reponse:", response.data)
+      if (response.data.body === "Success") {
+        navigate('/dashboard')
+      }
+      else {
+        setMessage("Username or password not correct")
+      }
     }
   };
 
