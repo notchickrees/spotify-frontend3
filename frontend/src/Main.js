@@ -6,6 +6,7 @@ import UpdatePasswordPage from "./Pages/Update_password_page";
 import HomePage from "./Components/HomePage";
 import DashBoard_page from "./Pages/DashBoard_page";
 import Dashboard from "./Components/Dashboard";
+import './App.css';
 
 const Main = () => {
   return (

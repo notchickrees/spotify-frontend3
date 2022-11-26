@@ -1,0 +1,5 @@
+.body{
+    border: 1px solid green;
+    width: 80%;
+    flex: 0.8;
+}
