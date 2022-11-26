@@ -2,20 +2,29 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './Login.css'
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+  const [response, setResponse] = useState(0);
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
   function handleSubmit(e){
-    // e.preventDefault()
+    e.preventDefault()
     const data={
-      "username" : username,
+      "email" : email,
       "password" : password,
     }
-    console.log(data);
-    axios.post("http://localhost:5000/form", data).then((res)=> console.log(res.data))
+    axios.post("http://localhost:5000/form", data).then((res)=> setResponse(res.data))
+    
+    if(response.body === "Success"){
+      navigate('/homepage')
+    }
+    else{
+      setMessage("Username or password not correct")
+    }
   };
 
   const buttonstyle={
@@ -45,9 +54,9 @@ export default function Login() {
       <form id="login">
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="form2Example2">
-            Username
+            Email
           </label>
-          <input type="email" id="form2Example1" name="email" className="form-control" value={username} onChange={(e) => setUsername(e.target.value)} />
+          <input type="email" id="form2Example1" name="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div className="form-outline mb-4">
           <label className="form-label" htmlFor="form2Example2">
@@ -87,7 +96,8 @@ export default function Login() {
             Register
           </button>
         </Link>
-        </div>
+        </div>  
+        <p>{message}</p>
       </form>
     </div>
     </div>

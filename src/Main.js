@@ -4,6 +4,8 @@ import Login from "./Components/Login";
 import RegistrationForm from "./Components/registrationForm";
 import UpdatePasswordPage from "./Pages/Update_password_page";
 import HomePage from "./Components/HomePage";
+import DashBoard from "./Pages/DashBoard";
+
 const Main = () => {
   return (
     <BrowserRouter>
@@ -12,6 +14,7 @@ const Main = () => {
         <Route path="/login" element={<Login />} />
         <Route path='/updatepassword' element={<UpdatePasswordPage />} />
         <Route path='/register' element={<RegistrationForm/>}/>
+        <Route path='/dashboard' element={<DashBoard/>}/>
       </Routes>
     </BrowserRouter>
   );
