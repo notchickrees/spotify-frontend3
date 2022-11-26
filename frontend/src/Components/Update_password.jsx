@@ -81,7 +81,6 @@ function UpdatePassword() {
             name="password"
             type="password"
             className="form-control"
-            placeholder="Old Password"
           />
           <p className="error-message">{formError.email}</p>
 
@@ -94,7 +93,6 @@ function UpdatePassword() {
             name="password"
             type="password"
             className="form-control"
-            placeholder="Password"
           />
           <p className="error-message">{formError.password}</p>
 
@@ -108,15 +106,11 @@ function UpdatePassword() {
             name="confirmPassword"
             type="password"
             className="form-control"
-            placeholder="Confirm Password"
           />
           </div>
 
           <p className="error-message">{formError.confirmPassword}</p>
-
-          <div id="passwordHelpBlock" class="form-text">
-            Your password must be 8-20 characters long.
-          </div>
+          
           <div className="text-center">
           <button type="submit" style={buttonstyle}>
             Change Password
