@@ -2,6 +2,8 @@ import React from "react";
 import "./Dashboard.css";
 import Sidebar from "./Sidebar.jsx"
 import Body from "./Body.jsx"
+import Footer from "./Footer.jsx"
+
 
 function Dashboard() {
     return (
@@ -11,7 +13,7 @@ function Dashboard() {
                 <Body/>
             </div>
 
-            {/* {footer} */}
+            <Footer />
         </div>
     )
 }
