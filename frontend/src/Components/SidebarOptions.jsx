@@ -1,6 +1,5 @@
 import React from 'react';
 import "./SidebarOptions.css";
-import Icon from '@mui/material/Icon';
 
 function SidebarOptions({title, Icon}) {
   return (
