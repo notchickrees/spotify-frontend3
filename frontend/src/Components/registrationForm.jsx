@@ -9,10 +9,11 @@ function RegistrationForm() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [checked, setChecked] = useState("user")
   const navigate = useNavigate();
 
   async function handleSubmit(e) {
-    e.preventDefault()
+    e.preventDefault();
     if (!userName) {
       alert("Username Cannot be empty");
     } else if (!email) {
@@ -25,8 +26,7 @@ function RegistrationForm() {
       alert("The passwords do not match, please retype.");
       setPassword("");
       setConfirmPassword("");
-    }
-    else if(password.length < 8){
+    } else if (password.length < 8) {
       alert("The password must be at least 8 characters long.");
       setPassword("");
       setConfirmPassword("");
@@ -35,7 +35,9 @@ function RegistrationForm() {
         username: userName,
         email: email,
         password: password,
+        usertype: checked,
       };
+      console.log(data)
       const response = await axios.post("http://localhost:5000/register", data);
       console.log("reponse:", response.data);
       if (response.data.body === "Success") {
@@ -43,6 +45,18 @@ function RegistrationForm() {
       } else {
         setMessage("Email or username already exists");
       }
+    }
+  }
+  function handleChangeUser(e){
+    e.preventDefault()
+    if(e.target.checked){
+      setChecked("user")
+    }
+  }
+  function handleChangeArtist(e){
+    e.preventDefault()
+    if(e.target.checked){
+      setChecked("artist")
     }
   }
 
@@ -138,6 +152,32 @@ function RegistrationForm() {
             <div id="emailHelp" className="form-text">
               Please retype your password.
             </div>
+          </div>
+          <p className="mb-0">Select your User Type:</p>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+              onChange={handleChangeUser}
+              checked
+            />
+            <label class="form-check-label" for="flexRadioDefault1">
+              User
+            </label>
+          </div>
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              onChange={handleChangeArtist}
+            />
+            <label class="form-check-label" for="flexRadioDefault2">
+              Artist
+            </label>
           </div>
           <div className="text-center">
             <button type="submit" style={buttonstyle} onClick={handleSubmit}>

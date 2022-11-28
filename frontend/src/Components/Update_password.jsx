@@ -1,53 +1,55 @@
 import { useState } from "react";
-import "./Update_password.css"
+import "./Update_password.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function UpdatePassword() {
-  const [formInput, setFormInput] = useState({
-    old_password: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const navigate = useNavigate();
+  const [old_password, setold_password] = useState("");
+  const [newpassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
-  const [formError, setFormError] = useState({
-    old_password: "",
-    password: "",
-    confirmPassword: "",
-  });
-
-  const handleUserInput = (name, value) => {
-    setFormInput({
-      ...formInput,
-      [name]: value,
-    });
-  };
-
-  const validateFormInput = (event) => {
-    event.preventDefault();
-    let inputError = {
-      old_password: "",
-      password: "",
-      confirmPassword: "",
-    };
-
-    if (formInput.confirmPassword !== formInput.password) {
-      setFormError({
-        ...inputError,
-        confirmPassword: "Password and confirm password should be same",
-      });
-      return;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!email) {
+      alert("Email cannot be empty");
+    } else if (!old_password) {
+      alert("Old password cannot be empty");
+    } else if (!newpassword) {
+      alert("New Password cannot be empty");
+    } else if (!confirmPassword) {
+      alert("Confirm Password cannot be empty");
+    } else if (newpassword !== confirmPassword) {
+      alert("The passwords do not match, please retype.");
+      setNewPassword("");
+      setConfirmPassword("");
+    } else if (newpassword.length < 8) {
+      alert("The password must be at least 8 characters long.");
+      setNewPassword("");
+      setConfirmPassword("");
+    } else {
+      const data = {
+        email: email,
+        oldPassword: old_password,
+        newPassword: newpassword,
+      };
+      console.log(data);
+      const response = await axios.post(
+        "http://localhost:5000/updatepassword",
+        data
+      );
+      // console.log("reponse:", response.data);
+      if (response.data.body === "Success") {
+        navigate("/dashboard");
+      } else {
+        setMessage("Old password incorrect");
+      }
     }
+  }
 
-    if (!formInput.password) {
-      setFormError({
-        ...inputError,
-        password: "Password should not be empty",
-      });
-      return;
-    }
-
-    setFormError(inputError);
-  };
-  const buttonstyle={
+  const buttonstyle = {
     fontFamily: "Bold",
     margin: "10px",
     padding: "10px 32px",
@@ -57,65 +59,67 @@ function UpdatePassword() {
     borderColor: "white",
     fontWeight: "600",
     color: "black",
-    textDecoration: 'none',
+    textDecoration: "none",
     alignText: "center",
   };
 
-  const header={
+  const header = {
     fontFamily: "Bold",
     padding: "30px",
-    fontSize: "40px"
-  }
+    fontSize: "40px",
+  };
 
   return (
     <div className="container my-3">
-      <h4 className="title text-center" style={header}>Reset Password</h4>
+      <h4 className="title text-center" style={header}>
+        Reset Password
+      </h4>
       <div className="updatepassword">
-        <form
-          onSubmit={validateFormInput}
-          action="http://localhost:5000/form"
-          method="POST"
-        >
+        <form>
+          <p className="label mb-0">Email</p>
+          <input
+            name="email"
+            type="email"
+            className="form-control mb-3"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
           <p className="label mb-0">Old Password</p>
           <input
             name="password"
             type="password"
-            className="form-control"
+            className="form-control mb-3"
+            value={old_password}
+            onChange={(e) => setold_password(e.target.value)}
           />
-          <p className="error-message">{formError.email}</p>
 
           <p className="label mb-0">New Password</p>
           <input
-            value={formInput.password}
-            onChange={({ target }) => {
-              handleUserInput(target.name, target.value);
-            }}
+            value={newpassword}
+            onChange={(e) => setNewPassword(e.target.value)}
             name="password"
             type="password"
-            className="form-control"
+            className="form-control mb-3"
           />
-          <p className="error-message">{formError.password}</p>
-
-          <div className="form-outline"> 
-          <label className="form-label" htmlFor="form2Example2">Confirm Password</label>
-          <input
-            value={formInput.confirmPassword}
-            onChange={({ target }) => {
-              handleUserInput(target.name, target.value);
-            }}
-            name="confirmPassword"
-            type="password"
-            className="form-control"
-          />
+          <div className="form-outline">
+            <label className="form-label mb-0" htmlFor="form2Example2">
+              Confirm Password
+            </label>
+            <input
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              name="confirmPassword"
+              type="password"
+              className="form-control mb-3"
+            />
           </div>
-
-          <p className="error-message">{formError.confirmPassword}</p>
-          
           <div className="text-center">
-          <button type="submit" style={buttonstyle}>
-            Change Password
-          </button>
+            <button type="submit" style={buttonstyle} onClick={handleSubmit}>
+              Change Password
+            </button>
           </div>
+          <p>{message}</p>
         </form>
       </div>
     </div>
