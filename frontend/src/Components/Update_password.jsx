@@ -8,11 +8,14 @@ function UpdatePassword() {
   const [old_password, setold_password] = useState("");
   const [newpassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [message, setMessage]= useState("");
+  const [message, setMessage] = useState("");
+  const [email, setEmail] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!old_password) {
+    if (!email) {
+      alert("Email cannot be empty");
+    } else if (!old_password) {
       alert("Old password cannot be empty");
     } else if (!newpassword) {
       alert("New Password cannot be empty");
@@ -28,9 +31,11 @@ function UpdatePassword() {
       setConfirmPassword("");
     } else {
       const data = {
+        email: email,
         oldPassword: old_password,
         newPassword: newpassword,
       };
+      console.log(data);
       const response = await axios.post(
         "http://localhost:5000/updatepassword",
         data
@@ -43,50 +48,7 @@ function UpdatePassword() {
       }
     }
   }
-  // const [formInput, setFormInput] = useState({
-  //   old_password: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
 
-  // const [formError, setFormError] = useState({
-  //   old_password: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-
-  // const handleUserInput = (name, value) => {
-  //   setFormInput({
-  //     ...formInput,
-  //     [name]: value,
-  //   });
-  // };
-
-  // const validateFormInput = (event) => {
-  //   event.preventDefault();
-  //   let inputError = {
-  //     old_password: "",
-  //     password: "",
-  //     confirmPassword: "",
-  //   };
-
-  //   if (formInput.confirmPassword !== formInput.password) {
-  //     setFormError({
-  //       ...inputError,
-  //       confirmPassword: "Password and confirm password should be same",
-  //     });
-  //     return;
-  //   }
-
-  //   if (!formInput.password) {
-  //     setFormError({
-  //       ...inputError,
-  //       password: "Password should not be empty",
-  //     });
-  //     return;
-  //   }
-
-  //   setFormError(inputError);
   const buttonstyle = {
     fontFamily: "Bold",
     margin: "10px",
@@ -114,6 +76,15 @@ function UpdatePassword() {
       </h4>
       <div className="updatepassword">
         <form>
+          <p className="label mb-0">Email</p>
+          <input
+            name="email"
+            type="email"
+            className="form-control mb-3"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+
           <p className="label mb-0">Old Password</p>
           <input
             name="password"
@@ -126,9 +97,7 @@ function UpdatePassword() {
           <p className="label mb-0">New Password</p>
           <input
             value={newpassword}
-            onChange={(e) =>
-              setNewPassword(e.target.value)
-            }
+            onChange={(e) => setNewPassword(e.target.value)}
             name="password"
             type="password"
             className="form-control mb-3"
@@ -139,9 +108,7 @@ function UpdatePassword() {
             </label>
             <input
               value={confirmPassword}
-              onChange={(e) => 
-                setConfirmPassword(e.target.value)
-              }
+              onChange={(e) => setConfirmPassword(e.target.value)}
               name="confirmPassword"
               type="password"
               className="form-control mb-3"
