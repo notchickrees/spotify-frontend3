@@ -1,8 +1,6 @@
 import React from 'react';
 import "./Footer.css";
-// import {Grid,Slider} from "@material-ui/core";
-// import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlayIcon"
-
+import playbutton from "./playbutton.png";
 
 function Footer() {
   return (
@@ -19,11 +17,17 @@ function Footer() {
         </div>
 
         <div className="footer_center">
-          <p>Buttons</p>
+        <img className="shuffle" src={require("./shuffle.png")} alt=""/>
+        <img className="back" src={require("./back.png")} alt=""/>
+        <img className="playbutton" src={require("./playbutton.png")} alt=""/>
+        <img className="next" src={require("./next.png")} alt=""/>
+        <img className="repeat" src={require("./repeat.png")} alt=""/>
+        {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
+
         </div>
 
         <div className="footer_right">
-          <p>Volume controls</p>
+        <img className="volume" src={require("./volume.png")} alt=""/>
         </div>
     </div>
   );
