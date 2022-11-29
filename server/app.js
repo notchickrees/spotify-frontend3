@@ -60,7 +60,7 @@ app.post('/loginform', function (req, res) {
                             res.json({
                                 body: "Success",
                                 username: results['rows'][0]['username'],
-                                usertyepe: results['rows'][0]['user_type'],
+                                usertype: results['rows'][0]['user_type'],
                             })
                         }
                     })
@@ -102,11 +102,11 @@ app.post('/register', async function (req, res) {
     })
 });
 app.post('/updatepassword', async function (req, res) {
-    let username = req.body["email"];
+    let email = req.body["email"];
     let old_password = req.body["oldPassword"];
     let new_password = req.body["newPassword"];
     let hashedPassword = await bcrypt.hash(new_password, 10);
-    pool.query('SELECT password FROM spotify_user WHERE email = $1', [username], (error, results) => {
+    pool.query('SELECT password FROM spotify_user WHERE email = $1', [email], (error, results) => {
         if (error) {
             throw error
         }
@@ -170,7 +170,6 @@ app.post('/uploadsong', async function (req, res) {
     })
 });
 app.post('/deletesong', async function (req, res) {
-    let username
 
     pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
         if (error) {
@@ -187,6 +186,50 @@ app.post('/deletesong', async function (req, res) {
         }
     })
 });
+app.post('/deleteuser', async function (req, res) {
+    let email = req.body["email"];
+    let old_password = req.body["password"];
+
+    pool.query('SELECT password FROM spotify_user WHERE email = $1', [email], (error, results) => {
+        if (error) {
+            throw error
+        }
+        if (results.rowCount == 0) {
+            res.json({
+                body: "Failed"
+            })
+        } else {
+            let temp_old_password = results.rows[0]['password']
+            bcrypt.compare(old_password, temp_old_password, (error, pass_check) => {
+                if (error) {
+                    res.json({
+                        body: "Failed"
+                    })
+                }
+                if (pass_check == false) {
+                    res.json({
+                        body: "Failed"
+                    })
+                } else {
+                    pool.query('DELETE spotify_user WHERE email = $1', [email], (error, results) => {
+                        if (error) {
+                            res.json({
+                                body: "Failed"
+                            })
+                        }
+                        else {
+                            console.log(hashedPassword)
+                            res.json({
+                                body: "Success",
+                            })
+                        }
+                    })
+                }
+            });
+        }
+    })
+});
+
 
 //start your server on port 3001
 app.listen(5000, () => {
