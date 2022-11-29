@@ -19,3 +19,8 @@
     padding: 5px;
     font-size:12px;
 }
+
+.sidebar_title > a{
+    color: white;
+    text-decoration: none;
+}
