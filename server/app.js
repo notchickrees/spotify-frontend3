@@ -17,9 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.post('/loginform', function (req, res) {
-    let username = req.body["email"];
+    let email = req.body["email"];
     let password = req.body["password"];
-    console.log(username, password);
 
     // pool.query('SELECT song_path FROM spotify_song WHERE username = $1', [username], (error, results) => {
     //     console.log("" + (results['rows'][1]['song_path']));
@@ -27,15 +26,13 @@ app.post('/loginform', function (req, res) {
     //         body: results['rows'][1]['song_path']
     //     })
     // });
-    pool.query('SELECT password FROM spotify_user WHERE email = $1 ', [username], (error, results) => {
+    pool.query('SELECT password FROM spotify_user WHERE email = $1 ', [email], (error, results) => {
         if (error) {
             res.json({
                 body: "Failed"
             })
         }
-        console.log(results);
-        console.log("LOGGING IN", username, password);
-        console.log(results.rowCount);
+
         if (results.rowCount == 0) {
             res.json({
                 body: "Failed"
@@ -53,9 +50,24 @@ app.post('/loginform', function (req, res) {
 
                 } else {
                     console.log("SUCCESS")
-                    res.json({
-                        body: "Success"
+                    pool.query('SELECT username, user_type FROM spotify_user WHERE email = $1', [email], (error, results) => {
+                        if (error) {
+                            res.json({
+                                body: "Failed"
+                            })
+                        }
+                        else {
+                            res.json({
+                                body: "Success",
+                                username: results['rows'][0]['username'],
+                                usertyepe: results['rows'][0]['user_type'],
+                            })
+                        }
                     })
+                    // res.json({
+                    //     body: "Success",
+                    //     username: username,
+                    // })
                 }
             });
         }
@@ -78,11 +90,13 @@ app.post('/register', async function (req, res) {
             res.json({
                 body: "Failed"
             })
-            throw(error)
+            throw (error)
         } else {
             console.log("SUCCESS")
             res.json({
-                body: "Success"
+                body: "Success",
+                username: username,
+                usertype: usertype,
             })
         }
     })
@@ -122,12 +136,54 @@ app.post('/updatepassword', async function (req, res) {
                         else {
                             console.log(hashedPassword)
                             res.json({
-                                body: "Success"
+                                body: "Success",
+                                username: username,
                             })
                         }
                     })
                 }
             });
+        }
+    })
+});
+// Upload song and metadata
+app.post('/uploadsong', async function (req, res) {
+    let username = req.body["username"];
+    let song_name = req.body["songname"];
+    let artist_name = req.body["artistname"];
+    let album_name = req.body["albumname"];
+    let song_path = req.body["songpath"];
+
+    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            console.log("SUCCESS")
+            res.json({
+                body: "Success",
+                username: username
+            })
+        }
+    })
+});
+app.post('/deletesong', async function (req, res) {
+    let username
+
+    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            console.log("SUCCESS")
+            res.json({
+                body: "Success",
+                username: username
+            })
         }
     })
 });
