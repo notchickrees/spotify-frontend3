@@ -25,6 +25,12 @@
     max-width: 300px;
 }
 
+.footer_center > img{
+    height: 3.5vw;
+    min-height: 50px;
+    width:fit-content;
+}
+
 .footer_right{
     flex:0.3;
     padding: 0 100px;

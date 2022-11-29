@@ -19,7 +19,9 @@ function Footer() {
         </div>
 
         <div className="footer_center">
-          <p>Buttons</p>
+          <img className="buttons"
+          src="https://cdn0.iconfinder.com/data/icons/google-material-design-3-0/48/ic_play_circle_filled_white_48px-512.png"
+          alt="play button"/>
         </div>
 
         <div className="footer_right">
