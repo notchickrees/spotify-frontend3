@@ -30,6 +30,8 @@ export default function Login() {
       const response = await axios.post("http://localhost:5000/loginform", data)
       console.log("reponse:", response.data)
       if (response.data.body === "Success") {
+        sessionStorage.setItem("username", response.data.username);
+        sessionStorage.setItem("usertype", response.data.usertype);
         navigate('/dashboard')
       }
       else {
