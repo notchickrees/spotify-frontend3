@@ -37,13 +37,13 @@ export default function CreateSong() {
         "songPath":songPath
       }
       
-      const response = await axios.post("http://localhost:5000/loginform", data)
+      const response = await axios.post("http://localhost:5000/uploadsong", data)
       console.log("reponse:", response.data)
       if (response.data.body === "Success") {
         navigate('/dashboard')
       }
       else {
-        setMessage("The entered song path is invalid.")
+        setMessage("The username is invalid.")
       }
     }
 

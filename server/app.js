@@ -148,11 +148,11 @@ app.post('/updatepassword', async function (req, res) {
 });
 // Upload song and metadata
 app.post('/uploadsong', async function (req, res) {
-    let username = req.body["username"];
-    let song_name = req.body["songname"];
-    let artist_name = req.body["artistname"];
-    let album_name = req.body["albumname"];
-    let song_path = req.body["songpath"];
+    let username = req.body["artistName"];
+    let song_name = req.body["songName"];
+    let artist_name = req.body["artistName"];
+    let album_name = req.body["albumName"];
+    let song_path = req.body["songPath"];
 
     pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
         if (error) {
