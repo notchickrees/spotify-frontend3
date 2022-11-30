@@ -30,7 +30,8 @@ const initialValueOfSongs = [
     songname: "On my way",
     artistname: "Alan Walker",
     Albumname: "On my way",
-    songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
+    songlink:
+      "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0",
   },
   {
     songname: "Aitebar",
@@ -57,23 +58,36 @@ const initialValueOfSongs = [
 export default function LikedSongs() {
   const [selectedSong, setSelectedSong] = useState(initialValueOfSongs[0]);
   const [songs, setSongs] = useState(initialValueOfSongs);
-  const [play, setPlay]= useState(require("./playbutton.png"))
+  const [play, setPlay] = useState(require("./playbutton.png"));
+  
+  var src = selectedSong.songlink;
+  var sound = new Howl({
+    src,
+    html5: true,
+    preload: true,
+    loop: true,
+  });
   
   useEffect(() => {
     fetchdata();
   }, []);
 
-  const callMySound=() =>{
-    const src= selectedSong.songlink
-    const sound= new Howl({
-      src,
-      html5:true,
-      preload: true,
-    })
+  const callMySound = () => {
     sound.play();
-    setPlay(require("./pause.png"))
+    setPlay(require("./pause.png"));
   };
-  
+
+  const handleplay= ()=>{
+    if(play===require("./pause.png")){
+      sound.pause()
+      setPlay(require("./playbutton.png"))
+    }
+    else{
+      sound.play()
+      setPlay(require("./pause.png"))
+    }
+  }
+
   async function fetchdata() {
     const response = await axios.get("http://localhost:5000/songs");
     const songs = response.data;
@@ -88,7 +102,8 @@ export default function LikedSongs() {
   const handleSongClick = (song) => {
     setSelectedSong(song);
     callMySound();
-  }
+    console.log(sound);
+  };
 
   return (
     <div className="songsbody">
@@ -125,11 +140,7 @@ export default function LikedSongs() {
         <div className="footer_center">
           <img className="shuffle" src={require("./shuffle.png")} alt="" />
           <img className="back" src={require("./back.png")} alt="" />
-          <img
-            className="playbutton"
-            src={play}
-            alt=""
-          />
+          <img className="playbutton" src={play} alt="" onClick={handleplay}/>
           {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
           <img className="next" src={require("./next.png")} alt="" />
           <img className="repeat" src={require("./repeat.png")} alt="" />
