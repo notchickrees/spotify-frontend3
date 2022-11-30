@@ -186,46 +186,22 @@ app.post('/deletesong', async function (req, res) {
         }
     })
 });
-app.post('/deleteuser', async function (req, res) {
-    let email = req.body["email"];
-    let old_password = req.body["password"];
+app.delete('/settings/:username', async function (req, res) {
 
-    pool.query('SELECT password FROM spotify_user WHERE email = $1', [email], (error, results) => {
+    console.log("HELLO",req.body)
+    let email = req.params["username"];
+    console.log(email)
+
+    pool.query('DELETE FROM spotify_user WHERE email = $1', [email], (error, results) => {
         if (error) {
-            throw error
-        }
-        if (results.rowCount == 0) {
             res.json({
                 body: "Failed"
             })
-        } else {
-            let temp_old_password = results.rows[0]['password']
-            bcrypt.compare(old_password, temp_old_password, (error, pass_check) => {
-                if (error) {
-                    res.json({
-                        body: "Failed"
-                    })
-                }
-                if (pass_check == false) {
-                    res.json({
-                        body: "Failed"
-                    })
-                } else {
-                    pool.query('DELETE spotify_user WHERE email = $1', [email], (error, results) => {
-                        if (error) {
-                            res.json({
-                                body: "Failed"
-                            })
-                        }
-                        else {
-                            console.log(hashedPassword)
-                            res.json({
-                                body: "Success",
-                            })
-                        }
-                    })
-                }
-            });
+        }
+        else {
+            res.json({
+                body: "Success"
+            })
         }
     })
 });
