@@ -3,6 +3,7 @@ import "./LikedSongs.css";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import axios from "axios";
+import { Howl } from "howler";
 
 function Song(props) {
   function handleSong(e) {
@@ -29,6 +30,7 @@ const initialValueOfSongs = [
     songname: "On my way",
     artistname: "Alan Walker",
     Albumname: "On my way",
+    songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
   },
   {
     songname: "Aitebar",
@@ -55,11 +57,23 @@ const initialValueOfSongs = [
 export default function LikedSongs() {
   const [selectedSong, setSelectedSong] = useState(initialValueOfSongs[0]);
   const [songs, setSongs] = useState(initialValueOfSongs);
-
+  const [play, setPlay]= useState(require("./playbutton.png"))
+  
   useEffect(() => {
     fetchdata();
   }, []);
 
+  const callMySound=() =>{
+    const src= selectedSong.songlink
+    const sound= new Howl({
+      src,
+      html5:true,
+      preload: true,
+    })
+    sound.play();
+    setPlay(require("./pause.png"))
+  };
+  
   async function fetchdata() {
     const response = await axios.get("http://localhost:5000/songs");
     const songs = response.data;
@@ -73,7 +87,7 @@ export default function LikedSongs() {
 
   const handleSongClick = (song) => {
     setSelectedSong(song);
-
+    callMySound();
   }
 
   return (
@@ -113,9 +127,10 @@ export default function LikedSongs() {
           <img className="back" src={require("./back.png")} alt="" />
           <img
             className="playbutton"
-            src={require("./playbutton.png")}
+            src={play}
             alt=""
           />
+          {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
           <img className="next" src={require("./next.png")} alt="" />
           <img className="repeat" src={require("./repeat.png")} alt="" />
         </div>
