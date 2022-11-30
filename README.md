@@ -14,5 +14,5 @@ Song Search
 Upload Music ⌛️
 Upload Metadata ⌛️
 Delete a Song ⌛️
-Delete a User ⌛️
-Delete an Artist ⌛️
+Delete a User ✅
+Delete an Artist ✅
