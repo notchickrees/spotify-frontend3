@@ -21,11 +21,11 @@ export default function Settings() {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const username = sessionStorage.getItem("username");
+  const email = sessionStorage.getItem("email");
 
-  function handleDelete(e) {
+  async function handleDelete(e) {
     e.preventDefault();
-    console.log(`http://localhost:5000/settings/${username}`);
-    const response = axios.delete(`http://localhost:5000/settings/${username}`);
+    const response = await axios.delete(`http://localhost:5000/settings/${email}`);
     if (response.data.body === "Success") {
       navigate("/login");
     } else {
