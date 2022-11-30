@@ -2,6 +2,7 @@ import React from 'react';
 import "./Header.css";
 
 function Header() {
+  const username= sessionStorage.getItem("username")
   return (
     <div className="header">
         <div className="header_left">
@@ -13,7 +14,7 @@ function Header() {
         </div>
         <div className="header_right">
             {/* <Avatar src= "" alt="Amna Sahar" /> */}
-            <h4>Amna Sahar</h4>
+            <a href='http://localhost:3000/settings'>{username}</a>
         </div>
     </div>
   )
