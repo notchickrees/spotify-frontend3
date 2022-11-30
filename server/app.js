@@ -186,50 +186,59 @@ app.post('/deletesong', async function (req, res) {
         }
     })
 });
-app.post('/deleteuser', async function (req, res) {
-    let email = req.body["email"];
-    let old_password = req.body["password"];
+app.delete('/settings/:username', async function (req, res) {
 
-    pool.query('SELECT password FROM spotify_user WHERE email = $1', [email], (error, results) => {
+    console.log("HELLO",req.body)
+    let email = req.params["username"];
+    console.log(email)
+
+    pool.query('DELETE FROM spotify_user WHERE email = $1', [email], (error, results) => {
         if (error) {
-            throw error
-        }
-        if (results.rowCount == 0) {
             res.json({
                 body: "Failed"
             })
-        } else {
-            let temp_old_password = results.rows[0]['password']
-            bcrypt.compare(old_password, temp_old_password, (error, pass_check) => {
-                if (error) {
-                    res.json({
-                        body: "Failed"
-                    })
-                }
-                if (pass_check == false) {
-                    res.json({
-                        body: "Failed"
-                    })
-                } else {
-                    pool.query('DELETE spotify_user WHERE email = $1', [email], (error, results) => {
-                        if (error) {
-                            res.json({
-                                body: "Failed"
-                            })
-                        }
-                        else {
-                            console.log(hashedPassword)
-                            res.json({
-                                body: "Success",
-                            })
-                        }
-                    })
-                }
-            });
+        }
+        else {
+            res.json({
+                body: "Success"
+            })
         }
     })
 });
 
+app.post('/getlikedsongs', async function (req, res) { //CHECK AGAIN
+    let email = req.body["email"];
+    pool.query('SELECT song_path FROM spotify_song WHERE song_id IS IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            res.json({
+                body: "Success",
+                song_path: results['rows']['song_path'],
+            })
+        }
+    })
+});
+
+app.post('/likesong', async function (req, res) {
+    let email = req.body["email"];
+    let song_id = req.body["song_id"];
+    pool.query('INSERT INTO spotify_liked_songs (email, song_id) VALUES ($1, $2)', [email,song_id], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            res.json({
+                body: "Success",
+            })
+        }
+    })
+});
 
 //start your server on port 3001
 app.listen(5000, () => {
