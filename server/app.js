@@ -230,6 +230,39 @@ app.post('/deleteuser', async function (req, res) {
     })
 });
 
+app.post('/getlikedsongs', async function (req, res) { //CHECK AGAIN
+    let email = req.body["email"];
+    pool.query('SELECT song_path FROM spotify_song WHERE song_id IS IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            res.json({
+                body: "Success",
+                song_path: results['rows']['song_path'],
+            })
+        }
+    })
+});
+
+app.post('/likesong', async function (req, res) {
+    let email = req.body["email"];
+    let song_id = req.body["song_id"];
+    pool.query('INSERT INTO spotify_liked_songs (email, song_id) VALUES ($1, $2)', [email,song_id], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            res.json({
+                body: "Success",
+            })
+        }
+    })
+});
 
 //start your server on port 3001
 app.listen(5000, () => {
