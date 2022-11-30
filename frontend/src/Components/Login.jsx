@@ -32,6 +32,7 @@ export default function Login() {
       if (response.data.body === "Success") {
         sessionStorage.setItem("username", response.data.username);
         sessionStorage.setItem("usertype", response.data.usertype);
+        sessionStorage.setItem("email", email);
         console.log(sessionStorage.getItem("username"));
         console.log(sessionStorage.getItem("usertype"));
         navigate('/dashboard')
