@@ -3,7 +3,7 @@ Use Cases Done:
 
 Sign Up ✅
 Log In ✅
-Log Out ⌛️
+Log Out ✅
 Update Password ✅
 Play a song 
 Favourite ⌛️
