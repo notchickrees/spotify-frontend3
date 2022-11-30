@@ -8,6 +8,7 @@ import DashBoard_page from "./Pages/DashBoard_page";
 import './App.css';
 import Settings from "./Components/Settings";
 import LikedSongs from "./Components/LikedSongs";
+import CreateSong from "./Components/Createsong";
 
 const Main = () => {
   return (
@@ -20,6 +21,7 @@ const Main = () => {
         <Route path='/dashboard' element={<DashBoard_page/>}/>
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/likedsongs' element={<LikedSongs/>}/>
+        <Route path='/uploadsong' element={<CreateSong/>}/>
       </Routes>
     </BrowserRouter>
   );

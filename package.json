@@ -5,6 +5,7 @@
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.10.15",
-    "@mui/material": "^5.10.15"
+    "@mui/material": "^5.10.15",
+    "react-howler": "^5.2.0"
   }
 }
