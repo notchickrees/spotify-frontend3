@@ -7,12 +7,28 @@ import HomePage from "./Components/HomePage";
 import DashBoard_page from "./Pages/DashBoard_page";
 import Dashboard from "./Components/Dashboard";
 import './App.css';
+import CreateSong from "./Components/Createsong";
+
 
 const Main = () => {
   return (
-    <BrowserRouter>
+    // <BrowserRouter>
+    //   <Routes>
+    //     <Route path='/' element={<HomePage />} />
+    //     <Route path="/login" element={<Login />} />
+    //     <Route path='/updatepassword' element={<UpdatePasswordPage />} />
+    //     <Route path='/register' element={<RegistrationForm/>}/>
+    //     <Route path='/dashboard' element={<DashBoard_page/>}/>
+    //   </Routes>
+    // </BrowserRouter>
+
+
+
+
+
+     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        <Route path='/' element={< CreateSong/>} />
         <Route path="/login" element={<Login />} />
         <Route path='/updatepassword' element={<UpdatePasswordPage />} />
         <Route path='/register' element={<RegistrationForm/>}/>
