@@ -3,115 +3,79 @@ import "./LikedSongs.css";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import axios from "axios";
-import Footer from "./Footer";
 
 function Song(props) {
-  const [songname, setSongname] = useState("");
-  const [artist, setArtist] = useState("-");
-  const [songlink, setSonglink] = useState("");
-
   function handleSong(e) {
     e.preventDefault();
-    console.log("working");
-    console.log(props.name);
-    console.log(props.artist);
-    setArtist(props.artist);
-    setSongname(props.name);
+    props.handleSongClick(props.song);
   }
 
   return (
     <div>
       <li className="songItem" onClick={handleSong}>
-        <span>{props.count}</span>
-        {/* <img src="img/1.jpg" alt="Alan"> */}
+        <span>{props.song.count}</span>
         <h5>
-          {props.name}
-          <div className="subtitle">{props.artist}</div>
+          {props.song.songname}
+          <div className="subtitle">{props.song.artistname}</div>
         </h5>
-        <div className="album">{props.album}</div>
+        <div className="album">{props.song.Albumname}</div>
       </li>
-      <div className="footer">
-        <div className="footer_left">
-          <img
-            className="footer_albumLogo"
-            src="https://i1.sndcdn.com/artworks-aHWeKTP05eBf-0-t500x500.jpg"
-            alt=""
-          />
-
-          <div className="footer_songInfo">
-            <h6>{songname}</h6>
-            <p>{artist}</p>
-          </div>
-        </div>
-
-        <div className="footer_center">
-          <img className="shuffle" src={require("./shuffle.png")} alt="" />
-          <img className="back" src={require("./back.png")} alt="" />
-          <img
-            className="playbutton"
-            src={require("./playbutton.png")}
-            alt=""
-          />
-          <img className="next" src={require("./next.png")} alt="" />
-          <img className="repeat" src={require("./repeat.png")} alt="" />
-          {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
-        </div>
-
-        <div className="footer_right">
-          <img className="volume" src={require("./volume.png")} alt="" />
-        </div>
-      </div>
     </div>
   );
 }
 
+const initialValueOfSongs = [
+  {
+    songname: "On my way",
+    artistname: "Alan Walker",
+    Albumname: "On my way",
+  },
+  {
+    songname: "Aitebar",
+    artistname: "Abdullah Qureshi",
+    Albumname: "Aitebar",
+  },
+  {
+    songname: "On my way",
+    artistname: "Alan Walker",
+    Albumname: "On my way",
+  },
+  {
+    songname: "On my way",
+    artistname: "Alan Walker",
+    Albumname: "On my way",
+  },
+  {
+    songname: "On my way",
+    artistname: "Alan Walker",
+    Albumname: "On my way",
+  },
+];
+
 export default function LikedSongs() {
+  const [selectedSong, setSelectedSong] = useState(initialValueOfSongs[0]);
+  const [songs, setSongs] = useState(initialValueOfSongs);
+
   useEffect(() => {
-    const songs1 = fetchdata();
-  });
+    fetchdata();
+  }, []);
 
   async function fetchdata() {
-    const songs = await axios.get("http://localhost:5000/songs");
-    return songs.data;
+    const response = await axios.get("http://localhost:5000/songs");
+    const songs = response.data;
+    var count = 1;
+    songs.forEach((song) => {
+      song["count"] = count;
+      count++;
+    });
+    setSongs(songs);
   }
 
-  const songs = [
-    {
-      songname: "On my way",
-      artistname: "Alan Walker",
-      Albumname: "On my way",
-    },
-    {
-      songname: "horse",
-      artistname: "chickrees",
-      Albumname: "On my way",
-    },
-    {
-      songname: "On my way",
-      artistname: "Alan Walker",
-      Albumname: "On my way",
-    },
-    {
-      songname: "On my way",
-      artistname: "Alan Walker",
-      Albumname: "On my way",
-    },
-    {
-      songname: "On my way",
-      artistname: "Alan Walker",
-      Albumname: "On my way",
-    },
-  ];
+  const handleSongClick = (song) => {
+    setSelectedSong(song);
 
-  var count = 1;
-  songs.forEach((song) => {
-    song["count"] = count;
-    count++;
-  });
-
-  {
-    /* <img src="img/1.jpg" alt="Alan"> */
   }
+
   return (
     <div className="songsbody">
       <Sidebar />
@@ -125,12 +89,40 @@ export default function LikedSongs() {
           songs.map((song) => (
             <Song
               key={song.count}
-              count={song.count}
-              name={song.songname}
-              album={song.Albumname}
-              artist={song.artistname}
+              song={song}
+              handleSongClick={handleSongClick}
             />
           ))}
+      </div>
+      <div className="footer">
+        <div className="footer_left">
+          <img
+            className="footer_albumLogo"
+            src="https://i1.sndcdn.com/artworks-aHWeKTP05eBf-0-t500x500.jpg"
+            alt=""
+          />
+
+          <div className="footer_songInfo">
+            <h6>{selectedSong.songname}</h6>
+            <p>{selectedSong.artistname}</p>
+          </div>
+        </div>
+
+        <div className="footer_center">
+          <img className="shuffle" src={require("./shuffle.png")} alt="" />
+          <img className="back" src={require("./back.png")} alt="" />
+          <img
+            className="playbutton"
+            src={require("./playbutton.png")}
+            alt=""
+          />
+          <img className="next" src={require("./next.png")} alt="" />
+          <img className="repeat" src={require("./repeat.png")} alt="" />
+        </div>
+
+        <div className="footer_right">
+          <img className="volume" src={require("./volume.png")} alt="" />
+        </div>
       </div>
     </div>
   );

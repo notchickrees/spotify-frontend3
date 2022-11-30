@@ -14,8 +14,8 @@ function Footer() {
           src="https://i1.sndcdn.com/artworks-aHWeKTP05eBf-0-t500x500.jpg" alt=""/>
 
           <div className="footer_songInfo">
-            <h6>{songname}</h6>
-            <p>{artist}</p>
+            <h6>-</h6>
+            <p>-</p>
           </div>
         </div>
 
