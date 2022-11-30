@@ -8,6 +8,10 @@ import DashBoard_page from "./Pages/DashBoard_page";
 import Dashboard from "./Components/Dashboard";
 import './App.css';
 import CreateSong from "./Components/Createsong";
+import SongTile from "./Components/SongTile";
+import { Create } from "@material-ui/icons";
+
+
 
 
 const Main = () => {

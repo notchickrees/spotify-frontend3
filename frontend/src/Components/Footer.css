@@ -8,7 +8,41 @@
     background-color: #282828;
     padding: 15px;
 }
-
+.abc
+{
+    line-height: 50px;
+}
+.songName
+{
+    line-height: 55px;
+    color: #d0d0d0;
+    opacity: 80%;
+    
+}
+.box {
+    max-width: 50%;
+    min-width: 300px;
+}
+.box1 {
+    max-width: 50%;
+    min-width: 500px;
+}
+.views
+{
+    line-height: 55px;
+    color: #d0d0d0;
+    opacity: 80%;
+    text-align: right;
+    
+}
+.time
+{
+    line-height: 55px;
+    color: #d0d0d0;
+    opacity: 80%;
+    margin-right: 20px;
+    
+}
 .footer_left{
     flex:0.3;
     display:flex;
@@ -40,6 +74,7 @@
     height:60px;
     width: 60px;
     margin-right: 20px;
+    margin-left: 30px;
     object-fit: contain;
     padding-bottom: 5px;
 }
