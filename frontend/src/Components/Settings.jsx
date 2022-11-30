@@ -25,7 +25,6 @@ export default function Settings() {
 
   async function handleDelete(e) {
     e.preventDefault();
-    console.log(`http://localhost:5000/settings/${username}`);
     const response = await axios.delete(`http://localhost:5000/settings/${email}`);
     if (response.data.body === "Success") {
       navigate("/login");

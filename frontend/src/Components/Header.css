@@ -25,6 +25,10 @@
     align-items: center;
 }
 
-.header_right > h4{
+.header_right > a{
     margin-left: 10px;
+    color: white;
+    text-decoration: none;
 }
+
+

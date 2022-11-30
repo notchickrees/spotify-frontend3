@@ -18,7 +18,7 @@ function Sidebar(){
             <SidebarOptions  title = "Your Library" />
             
             <br/>
-            <strong className="sidebar_title">LIKED SONGS</strong>
+            <strong className="sidebar_title"><a href='http://localhost:3000/likedsongs'>LIKED SONGS</a></strong>
             <hr />
 
             <strong className="sidebar_title">PLAYLISTS</strong>
@@ -35,9 +35,6 @@ function Sidebar(){
             <SidebarOptions title="Indie Hits"/>
             <SidebarOptions title="Workout"/>
             <SidebarOptions title="sad boi hours"/>
-
-
-
         </div>
     );
 }
