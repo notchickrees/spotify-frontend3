@@ -30,6 +30,14 @@ export default function Login() {
       const response = await axios.post("http://localhost:5000/loginform", data)
       console.log("reponse:", response.data)
       if (response.data.body === "Success") {
+<<<<<<< Updated upstream
+=======
+        sessionStorage.setItem("username", response.data.username);
+        sessionStorage.setItem("usertype", response.data.usertype);
+        sessionStorage.setItem("email", email);
+        console.log(sessionStorage.getItem("username"));
+        console.log(sessionStorage.getItem("usertype"));
+>>>>>>> Stashed changes
         navigate('/dashboard')
       }
       else {
