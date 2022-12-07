@@ -13,7 +13,7 @@ function Dashboard() {
                 <Body/>
             </div>
 
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

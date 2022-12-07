@@ -67,13 +67,18 @@ export default function LikedSongs() {
   const [shufflepng, setShufflepng] =useState(require("./shuffle.png"))
 
   
-  // audio.current.onended(()=>{
-  //   handlenext();
-  // })
 
   useEffect(() => {
     fetchdata();
   }, []);
+
+  useEffect(()=>{
+    audio.current.addEventListener('ended', handleEnd)
+    
+    function handleEnd(){
+      handlenext();
+    }
+  })
 
   useEffect(()=>{
     console.log("fired")
