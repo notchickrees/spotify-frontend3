@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./LikedSongs.css";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
@@ -37,6 +37,7 @@ const initialValueOfSongs = [
     songname: "Aitebar",
     artistname: "Abdullah Qureshi",
     Albumname: "Aitebar",
+    songlink: ""
   },
   {
     songname: "On my way",
@@ -56,34 +57,38 @@ const initialValueOfSongs = [
 ];
 
 export default function LikedSongs() {
-  const [selectedSong, setSelectedSong] = useState(initialValueOfSongs[0]);
+  const [selectedSong, setSelectedSong] = useState("");
   const [songs, setSongs] = useState(initialValueOfSongs);
   const [play, setPlay] = useState(require("./playbutton.png"));
-  
-  var src = selectedSong.songlink;
-  var sound = new Howl({
-    src,
-    html5: true,
-    preload: true,
-    loop: true,
-  });
-  
+  // const [playing, setPlaying] =useState(false);
+  const audio= useRef(new Audio(selectedSong.songlink));
+
   useEffect(() => {
     fetchdata();
   }, []);
 
+  useEffect(()=>{
+    console.log("fired")
+    // audio.current=new Audio(selectedSong.songlink);
+    audio.current.pause();
+    audio.current.src= selectedSong.songlink;
+    audio.current.load()
+    callMySound();
+  },[selectedSong]);
+
   const callMySound = () => {
-    sound.play();
+    audio.current.play();
+    // setPlaying(true);
     setPlay(require("./pause.png"));
   };
 
   const handleplay= ()=>{
     if(play===require("./pause.png")){
-      sound.pause()
+      audio.current.pause()
       setPlay(require("./playbutton.png"))
     }
     else{
-      sound.play()
+      audio.current.play()
       setPlay(require("./pause.png"))
     }
   }
@@ -101,8 +106,6 @@ export default function LikedSongs() {
 
   const handleSongClick = (song) => {
     setSelectedSong(song);
-    callMySound();
-    console.log(sound);
   };
 
   return (
@@ -125,12 +128,6 @@ export default function LikedSongs() {
       </div>
       <div className="footer">
         <div className="footer_left">
-          <img
-            className="footer_albumLogo"
-            src="https://i1.sndcdn.com/artworks-aHWeKTP05eBf-0-t500x500.jpg"
-            alt=""
-          />
-
           <div className="footer_songInfo">
             <h6>{selectedSong.songname}</h6>
             <p>{selectedSong.artistname}</p>
