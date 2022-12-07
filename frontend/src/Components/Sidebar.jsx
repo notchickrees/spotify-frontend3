@@ -1,10 +1,6 @@
 import React from "react";
 import "./Sidebar.css";
 import SidebarOptions from "./SidebarOptions";
-import Icon from '@mui/material/Icon';
-import LibraryMusicOutlinedIcon from '@mui/icons-material/LibraryMusicOutlined';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 
 function Sidebar(){
     return (
@@ -13,9 +9,9 @@ function Sidebar(){
             src="https://getheavy.com/wp-content/uploads/2019/12/spotify2019-830x350.jpg"
             alt=""
             />
-            <SidebarOptions Icon={HomeOutlinedIcon} title = "Home" />
-            <SidebarOptions Icon={SearchOutlinedIcon} title = "Search" />
-            <SidebarOptions Icon={LibraryMusicOutlinedIcon} title = "Your Library" />
+            <SidebarOptions title = "Home" />
+            <SidebarOptions title = "Search" />
+            <SidebarOptions title = "Your Library" />
             
             <br/>
             <strong className="sidebar_title">LIKED SONGS</strong>

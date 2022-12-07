@@ -7,7 +7,7 @@ function Header() {
         <div className="header_left">
         {/* searchicon */}
         <input
-            placeholder="Search for Artists and Songs"
+            placeholder=" Search for Artists and Songs"
             type="text"
         />
         </div>

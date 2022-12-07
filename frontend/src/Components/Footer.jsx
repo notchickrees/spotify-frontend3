@@ -12,8 +12,15 @@ function Footer() {
 
           <div className="footer_songInfo">
             <h6>Serenade</h6>
-            <p>BANNERS</p>
+            <p>BANNERS </p>
           </div>
+
+          {/* <div className="like"/>
+          <img className="like" src={require("./like.png")} alt=""/> */}
+
+          <div className="likefilled"/>
+          <img className="likefilled" src={require("./likefilled.png")} alt=""/>
+  
         </div>
 
         <div className="footer_center">
