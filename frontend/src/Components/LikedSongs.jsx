@@ -3,7 +3,6 @@ import "./LikedSongs.css";
 import Sidebar from "./Sidebar";
 import { useEffect } from "react";
 import axios from "axios";
-import { Howl } from "howler";
 
 function Song(props) {
   function handleSong(e) {
@@ -37,20 +36,21 @@ const initialValueOfSongs = [
     songname: "Aitebar",
     artistname: "Abdullah Qureshi",
     Albumname: "Aitebar",
-    songlink: ""
+    songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
   },
   {
-    songname: "On my way",
+    songname: "On my way 2",
+    artistname: "Alan Walker",
+    Albumname: "On my way",
+    songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
+  },
+  {
+    songname: "On my way 3",
     artistname: "Alan Walker",
     Albumname: "On my way",
   },
   {
-    songname: "On my way",
-    artistname: "Alan Walker",
-    Albumname: "On my way",
-  },
-  {
-    songname: "On my way",
+    songname: "On my way 4",
     artistname: "Alan Walker",
     Albumname: "On my way",
   },
@@ -60,8 +60,16 @@ export default function LikedSongs() {
   const [selectedSong, setSelectedSong] = useState("");
   const [songs, setSongs] = useState(initialValueOfSongs);
   const [play, setPlay] = useState(require("./playbutton.png"));
-  // const [playing, setPlaying] =useState(false);
   const audio= useRef(new Audio(selectedSong.songlink));
+  const [repeat, setRepeat]= useState(false);
+  const [shuffle, setShuffle]= useState(false);
+  const [repeatpng, setRepeatpng] =useState(require("./repeat.png"))
+  const [shufflepng, setShufflepng] =useState(require("./shuffle.png"))
+
+  
+  // audio.current.onended(()=>{
+  //   handlenext();
+  // })
 
   useEffect(() => {
     fetchdata();
@@ -90,6 +98,58 @@ export default function LikedSongs() {
     else{
       audio.current.play()
       setPlay(require("./pause.png"))
+    }
+  }
+
+  const handlenext = () => {
+    const length= songs.length;
+    var index = songs.indexOf(selectedSong);
+    if(repeat === true){
+      console.log("here")
+      setSelectedSong(songs[index])
+    }
+    else if(shuffle === true){
+      var shuffle_index= Math.floor(Math.random()* length);
+      setSelectedSong(songs[shuffle_index]);
+    }
+    else if(index === length - 1){
+      setSelectedSong(songs[0]);
+    }
+    else{
+      setSelectedSong(songs[index + 1])
+    }
+  }
+
+  const handleprevious = () => {
+    const length= songs.length;
+    var index = songs.indexOf(selectedSong);
+    if(index == 0){
+      setSelectedSong(songs[index-1]);
+    }
+    else{
+      setSelectedSong(songs[index - 1])
+    }
+  }
+
+  const handleshuffle = ()=> {
+    if(shuffle == false){
+      setShuffle(true)
+      setShufflepng(require("./shuffle2.png"))
+    }
+    else{
+      setShuffle(false)
+      setShufflepng(require("./shuffle.png"))
+    }
+  }
+
+  const handlerepeat = () => {
+    if(repeat == false){
+      setRepeat(true)
+      setRepeatpng(require("./repeat2.png"))
+    }
+    else{
+      setRepeat(false)
+      setRepeatpng(require("./repeat.png"))
     }
   }
 
@@ -135,12 +195,12 @@ export default function LikedSongs() {
         </div>
 
         <div className="footer_center">
-          <img className="shuffle" src={require("./shuffle.png")} alt="" />
-          <img className="back" src={require("./back.png")} alt="" />
+          <img className="shuffle" src={shufflepng} alt="" onClick={handleshuffle}/>
+          <img className="back" src={require("./back.png")} alt="" onClick= {handleprevious} />
           <img className="playbutton" src={play} alt="" onClick={handleplay}/>
           {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
-          <img className="next" src={require("./next.png")} alt="" />
-          <img className="repeat" src={require("./repeat.png")} alt="" />
+          <img className="next" src={require("./next.png")} alt="" onClick= {handlenext}/>
+          <img className="repeat" src={repeatpng} alt="" onClick={handlerepeat} />
         </div>
 
         <div className="footer_right">
