@@ -10,10 +10,9 @@ function Dashboard() {
         <div className="Dashboard">
             <div className="Dashboard_body">
                 <Sidebar/>
+                
                 <Body/>
             </div>
-
-            {/* <Footer /> */}
         </div>
     )
 }
