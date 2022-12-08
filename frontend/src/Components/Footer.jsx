@@ -1,8 +1,13 @@
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import "./Footer.css";
 import playbutton from "./playbutton.png";
 
+
 function Footer() {
+
+
   return (
     <div className = "footer">
         <div className="footer_left">
@@ -11,8 +16,7 @@ function Footer() {
           src="https://i1.sndcdn.com/artworks-aHWeKTP05eBf-0-t500x500.jpg" alt=""/>
 
           <div className="footer_songInfo">
-            <h6>Serenade</h6>
-            <p>BANNERS </p>
+
           </div>
 
           {/* <div className="like"/>

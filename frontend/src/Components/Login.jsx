@@ -30,6 +30,11 @@ export default function Login() {
       const response = await axios.post("http://localhost:5000/loginform", data)
       console.log("reponse:", response.data)
       if (response.data.body === "Success") {
+        sessionStorage.setItem("username", response.data.username);
+        sessionStorage.setItem("usertype", response.data.usertype);
+        sessionStorage.setItem("email", email);
+        console.log(sessionStorage.getItem("username"));
+        console.log(sessionStorage.getItem("usertype"));
         navigate('/dashboard')
       }
       else {
@@ -74,29 +79,6 @@ export default function Login() {
               Password
             </label>
             <input type="password" id="form2Example2" name="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <div className="row mb-4">
-            <div className="col d-flex justify-content-center">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="form2Example31"
-                  defaultChecked={true}
-                />
-                <label className="form-check-label" htmlFor="form2Example31">
-                  {" "}
-                  Remember me{" "}
-                </label>
-              </div>
-            </div>
-
-            <div className="col text-right">
-              <Link to="/updatepassword">
-                <a href="#!">Forgot password?</a>
-              </Link>
-            </div>
           </div>
           <div className='text-center'>
             <button id="Signin" style={buttonstyle} onClick={handleSubmit}>
