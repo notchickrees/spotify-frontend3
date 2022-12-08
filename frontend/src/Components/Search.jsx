@@ -67,8 +67,19 @@ export default function Search() {
       setHref("http://localhost:3000/uploadsong");
       setArtist("Upload Song");
     }
+    fetchdata()
   }, []);
 
+  async function fetchdata() {
+    const response = await axios.get(`http://localhost:5000/search`);
+    var count = 1;
+    response.data.data.forEach((song) => {
+      song["count"] = count;
+      count++;
+    });
+    setSongs(response.data.data);
+  }
+  
   useEffect(() => {
     setCode(
       songs &&
