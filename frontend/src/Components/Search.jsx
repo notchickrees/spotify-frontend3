@@ -83,6 +83,7 @@ export default function Search() {
 
 
   async function handleSearch(e) {
+    e.preventDefault()
     setMessage("")
     if (!search) {
       alert("Search cannot be empty");
@@ -101,11 +102,13 @@ export default function Search() {
       } else {
         var count = 1;
         response.data.data.forEach((song) => {
-          for (var i = 0; i < response2.data.data.length; i++) {
-            console.log("here")
-            if (response2.data.data[i].songname == song.songname) {
-              console.log("true")
-              song["liked"] = true;
+          if (response2.data.data) {
+            for (var i = 0; i < response2.data.data.length; i++) {
+              console.log("here")
+              if (response2.data.data[i].songname == song.songname) {
+                console.log("true")
+                song["liked"] = true;
+              }
             }
           }
           song["count"] = count;
@@ -126,16 +129,18 @@ export default function Search() {
             <div className="header">
               <div className="header_left">
                 {/* searchicon */}
-                <input
-                  placeholder="Search for Artists and Songs"
-                  type="text"
-                  name="search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                />
-                <button id="btn" onClick={handleSearch}>
-                  Search
-                </button>
+                <form action="">
+                  <input
+                    placeholder="Search for Songs"
+                    type="text"
+                    name="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                  />
+                  <button id="btn" onClick={handleSearch}>
+                    Search
+                  </button>
+                </form>
               </div>
               <div className="header_right">
                 {/* <Avatar src= "" alt="Amna Sahar" /> */}

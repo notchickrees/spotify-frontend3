@@ -180,10 +180,10 @@ app.post('/deletesong', async function (req, res) {
         }
     })
 });
-app.delete('/settings/:username', async function (req, res) {
+app.delete('/settings/:email', async function (req, res) {
 
     console.log("HELLO", req.body)
-    let email = req.params["username"];
+    let email = req.params["email"];
     console.log(email)
 
     pool.query('DELETE FROM spotify_user WHERE email = $1', [email], (error, results) => {

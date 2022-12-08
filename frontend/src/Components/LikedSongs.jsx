@@ -98,7 +98,7 @@ export default function LikedSongs() {
     const length = songs.length;
     var index = songs.indexOf(selectedSong);
     if (index == 0) {
-      setSelectedSong(songs[index - 1]);
+      setSelectedSong(songs[length - 1]);
     }
     else {
       setSelectedSong(songs[index - 1])
