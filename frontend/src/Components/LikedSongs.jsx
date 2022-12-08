@@ -159,8 +159,9 @@ export default function LikedSongs() {
   }
 
   async function fetchdata() {
-    const response = await axios.get("http://localhost:5000/songs");
-    const songs = response.data;
+    const email = sessionStorage.getItem("email")
+    const response = await axios.get(`http://localhost:5000/getlikedsongs/${email}`);
+    const songs = response.data.data;
     var count = 1;
     songs.forEach((song) => {
       song["count"] = count;
