@@ -26,10 +26,10 @@ export default function DeleteSong() {
       alert("Song Cannot be empty");
     }
     else{
-      const response = await axios.delete(`http://localhost:5000/${song}`)
+      const response = await axios.delete(`http://localhost:5000/deletesong/${sessionStorage.getItem("username")}/${song}`)
       if (response.data.body === "Success"){
         setMessage("Delete Successful")
-        navigate("./dashboard")
+        navigate("/dashboard")
       }
       else{
         setMessage("Delete unsuccessful, either song name is invalid or you cannot delete that song")

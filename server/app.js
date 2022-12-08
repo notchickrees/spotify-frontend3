@@ -86,14 +86,34 @@ app.post('/register', async function (req, res) {
             })
             throw (error)
         } else {
-            console.log("SUCCESS")
-            res.json({
-                body: "Success",
-                username: username,
-                usertype: usertype,
-            })
+            if (usertype == "artist") {
+                let artist_name = username + "_artist";
+                pool.query('INSERT INTO spotify_artist (username, artist_name) VALUES ($1, $2)', [username, artist_name], (error, results) => {
+                    if (error) {
+                        res.json({
+                            body: "Failed"
+                        })
+                        throw (error)
+                    } else {
+                        console.log("SUCCESS")
+                        res.json({
+                            body: "Success",
+                            username: username,
+                            usertype: usertype,
+                        })
+                    }
+                })
+            } else {
+                res.json({
+                    body: "Success",
+                    username: username,
+                    usertype: usertype,
+                })
+            }
         }
     })
+
+    
 });
 app.post('/updatepassword', async function (req, res) {
     let email = req.body["email"];
@@ -155,14 +175,24 @@ app.post('/uploadsong', async function (req, res) {
             })
             throw (error)
         } else {
-            console.log("SUCCESS")
-            res.json({
-                body: "Success",
-                username: username
+            pool.query('INSERT INTO spotify_album (album_name, song_id, display_name) VALUES ($1, (select song_id from spotify_song where song_name = $2 and username = $3), $4)', [album_name, song_name, username, username + "_artist"], (error, results) => {
+                if (error) {
+                    res.json({
+                        body: "Failed"
+                    })
+                    throw (error)
+                } else {
+                    console.log("SUCCESS")
+                    res.json({
+                        body: "Success",
+                        username: username
+                    })
+                }
             })
         }
     })
 });
+
 app.post('/deletesong', async function (req, res) {
 
     pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
@@ -200,6 +230,39 @@ app.delete('/settings/:email', async function (req, res) {
         }
     })
 });
+
+app.delete('/deletesong/:email/:song', async function (req, res) {
+
+    console.log("HELLO", req.body)
+    let email = req.params["email"];
+    let song = req.params["song"];
+    let new_song = song.split('%').join('');
+
+    pool.query('SELECT FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, email], (error, results) => {
+        if (results.rowCount == 0) {
+            res.json({
+                body: "Failed"
+            })
+        }
+        else {
+            pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, email], (error, results) => {
+                if (error) {
+                    res.json({
+                        body: "Failed"
+                    })
+                }
+                else {
+                    res.json({
+                        body: "Success"
+                    })
+                }
+            })
+        }
+    })
+
+    
+});
+
 
 app.get('/getlikedsongs/:email', async function (req, res) {
     let email = req.params["email"];
