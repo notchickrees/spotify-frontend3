@@ -20,12 +20,6 @@ app.post('/loginform', function (req, res) {
     let email = req.body["email"];
     let password = req.body["password"];
 
-    // pool.query('SELECT song_path FROM spotify_song WHERE username = $1', [username], (error, results) => {
-    //     console.log("" + (results['rows'][1]['song_path']));
-    //     res.json({
-    //         body: results['rows'][1]['song_path']
-    //     })
-    // });
     pool.query('SELECT password FROM spotify_user WHERE email = $1 ', [email], (error, results) => {
         if (error) {
             res.json({
@@ -188,7 +182,7 @@ app.post('/deletesong', async function (req, res) {
 });
 app.delete('/settings/:username', async function (req, res) {
 
-    console.log("HELLO",req.body)
+    console.log("HELLO", req.body)
     let email = req.params["username"];
     console.log(email)
 
@@ -206,18 +200,28 @@ app.delete('/settings/:username', async function (req, res) {
     })
 });
 
-app.post('/getlikedsongs', async function (req, res) { //CHECK AGAIN
-    let email = req.body["email"];
-    pool.query('SELECT song_path FROM spotify_song WHERE song_id IS IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
-        if (error) {
+app.get('/getlikedsongs/:email', async function (req, res) {
+    let email = req.params["email"];
+    pool.query('SELECT song_name, artist_name,album_name, song_path FROM spotify_song WHERE song_id IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
+        if (results.rowCount == 0) {
             res.json({
-                body: "Failed"
+                body: "No Liked Songs"
             })
-            throw (error)
-        } else {
+        }
+        else {
+            var arr = []
+            for (var i = 0; i < results['rows'].length; i++) {
+                let jsonobj = {
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                }
+                arr.push(jsonobj)
+            }
             res.json({
                 body: "Success",
-                song_path: results['rows']['song_path'],
+                data: arr,
             })
         }
     })
@@ -226,7 +230,7 @@ app.post('/getlikedsongs', async function (req, res) { //CHECK AGAIN
 app.post('/likesong', async function (req, res) {
     let email = req.body["email"];
     let song_id = req.body["song_id"];
-    pool.query('INSERT INTO spotify_liked_songs (email, song_id) VALUES ($1, $2)', [email,song_id], (error, results) => {
+    pool.query('INSERT INTO spotify_liked_songs (email, song_id) VALUES ($1, $2)', [email, song_id], (error, results) => {
         if (error) {
             res.json({
                 body: "Failed"
@@ -235,6 +239,32 @@ app.post('/likesong', async function (req, res) {
         } else {
             res.json({
                 body: "Success",
+            })
+        }
+    })
+});
+app.get('/search/:keyword', async function (req, res) {
+    let keyword = req.params["keyword"];
+    pool.query('SELECT * FROM spotify_song WHERE song_name LIKE $1%', [keyword], (error, results) => {
+        if (results.rowCount == 0) {
+            res.json({
+                body: "No Songs Found"
+            })
+        }
+        else {
+            var arr = []
+            for (var i = 0; i < results['rows'].length; i++) {
+                let jsonobj = {
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                }
+                arr.push(jsonobj)
+            }
+            res.json({
+                body: "Success",
+                data: arr,
             })
         }
     })
