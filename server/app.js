@@ -20,12 +20,6 @@ app.post('/loginform', function (req, res) {
     let email = req.body["email"];
     let password = req.body["password"];
 
-    // pool.query('SELECT song_path FROM spotify_song WHERE username = $1', [username], (error, results) => {
-    //     console.log("" + (results['rows'][1]['song_path']));
-    //     res.json({
-    //         body: results['rows'][1]['song_path']
-    //     })
-    // });
     pool.query('SELECT password FROM spotify_user WHERE email = $1 ', [email], (error, results) => {
         if (error) {
             res.json({
@@ -206,7 +200,7 @@ app.delete('/settings/:username', async function (req, res) {
     })
 });
 
-app.get('/getlikedsongs/:email', async function (req, res) { //CHECK AGAIN
+app.get('/getlikedsongs/:email', async function (req, res) {
     let email = req.params["email"];
     pool.query('SELECT song_name, artist_name,album_name, song_path FROM spotify_song WHERE song_id IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
         if (results.rowCount == 0) {
@@ -245,6 +239,32 @@ app.post('/likesong', async function (req, res) {
         } else {
             res.json({
                 body: "Success",
+            })
+        }
+    })
+});
+app.get('/search/:keyword', async function (req, res) {
+    let keyword = req.params["keyword"];
+    pool.query('SELECT * FROM spotify_song WHERE song_name LIKE $1%', [keyword], (error, results) => {
+        if (results.rowCount == 0) {
+            res.json({
+                body: "No Songs Found"
+            })
+        }
+        else {
+            var arr = []
+            for (var i = 0; i < results['rows'].length; i++) {
+                let jsonobj = {
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                }
+                arr.push(jsonobj)
+            }
+            res.json({
+                body: "Success",
+                data: arr,
             })
         }
     })
