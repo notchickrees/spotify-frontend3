@@ -65,8 +65,6 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [message, setMessage] = useState("");
   const [songs, setSongs] = useState("");
-  const [likedpng, setLikedpng] = useState(require("./like.png"));
-  const [selectedSong, setSelectedSong] = useState("");
 
   useEffect(() => {
     if (sessionStorage.getItem("usertype") === "artist") {
