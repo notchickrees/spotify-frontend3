@@ -23,4 +23,6 @@
 .sidebar_title > a{
     color: white;
     text-decoration: none;
+.like{
+    margin-top: none;
 }
