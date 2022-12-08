@@ -5,9 +5,36 @@ import { useState, useEffect } from "react";
 import "./LikedSongs.css";
 
 function Song(props) {
-  function handleSong(e) {
+
+    useEffect(() =>{
+        if (props.song.liked == true){
+            setLikedpng(require("./likefilled.png"))
+        }
+    }, [])
+  
+    function handleSong(e) {
     e.preventDefault();
     props.handleLiked(props.song);
+  }
+
+  const [likedpng, setLikedpng] = require ("./like.png");
+
+  async function handleLiked() {
+    if (likedpng == require("./likefilled.png")) {
+      setLikedpng(require("./like.png"));
+      const data = {
+        email: sessionStorage.getItem("email"),
+        song_id: props.song.song_id,
+      };
+      const response = await axios.post(`http://localhost:5000/unlike`, data);
+    } else {
+      const data = {
+        email: sessionStorage.getItem("email"),
+        song_id: props.song.song_id,
+      };
+      const response = await axios.post(`http://localhost:5000/likesong`, data);
+      setLikedpng(require("./likefilled.png"));
+    }
   }
 
   return (
@@ -22,9 +49,9 @@ function Song(props) {
         <div className="likefilled" />
         <img
           className="likefilled"
-          src={props.likedpng}
+          src={likedpng}
           alt=""
-          onClick={props.handleLiked}
+          onClick={handleLiked}
         />
       </li>
     </div>
@@ -48,18 +75,6 @@ export default function Search() {
     }
   }, []);
 
-  async function handleLiked() {
-    if (likedpng == require("./likefilled.png")) {
-      setLikedpng(require("./like.png"));
-      const data = {
-        email: sessionStorage.getItem("email"),
-        song_id: selectedSong.song_id,
-      };
-      const response = await axios.post(`http://localhost:5000/unlike`, data);
-    } else {
-      setLikedpng(require("./likefilled.png"));
-    }
-  }
 
   async function handleSearch(e) {
     e.preventDefault();
@@ -82,28 +97,6 @@ export default function Search() {
         setSongs(songs);
       }
     }
-  }
-  async function handleLiked(song) {
-    if (likedpng == require("./likefilled.png")) {
-        setLikedpng(require("./like.png"));
-        const data = {
-            email: sessionStorage.getItem("email"),
-            song_id: selectedSong.song_id,
-        };
-        const response = await axios.post(`http://localhost:5000/unlike`, data);
-    } else {
-        const data = {
-            email: sessionStorage.getItem("email"),
-            song_id: song.song_id,
-        };
-        const response = await axios.post(`http://localhost:5000/likesong`, data);
-        setLikedpng(require("./likefilled.png"));
-    }
-
-    // song["liked"] = true;
-    // setSelectedSong(song);
-    // var index = songs.indexOf(song);
-    // songs[index] = song;
   }
 
   return (
@@ -133,15 +126,15 @@ export default function Search() {
               </div>
             </div>
             <h3 className="my-5">{message}</h3>
-            {songs &&
-              songs.map((song) => (
-                <Song
-                  key={song.count}
-                  song={song}
-                  handleLiked={handleLiked}
-                  likedpng={likedpng}
-                />
-              ))}
+              <div className="listsongs">
+                {songs &&
+                  songs.map((song) => (
+                    <Song
+                      key={song.count}
+                      song={song}
+                    />
+                  ))}
+              </div>
           </div>
         </div>
       </div>
