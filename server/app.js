@@ -131,6 +131,194 @@ app.post('/updatepassword', async function (req, res) {
         }
     })
 });
+<<<<<<< Updated upstream
+=======
+// Upload song and metadata
+app.post('/uploadsong', async function (req, res) {
+    let username = req.body["artistName"];
+    let song_name = req.body["songName"];
+    let artist_name = req.body["artistName"];
+    let album_name = req.body["albumName"];
+    let song_path = req.body["songPath"];
+
+    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            console.log("SUCCESS")
+            res.json({
+                body: "Success",
+                username: username
+            })
+        }
+    })
+});
+app.post('/deletesong', async function (req, res) {
+
+    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            console.log("SUCCESS")
+            res.json({
+                body: "Success",
+                username: username
+            })
+        }
+    })
+});
+app.delete('/settings/:email', async function (req, res) {
+
+    console.log("HELLO", req.body)
+    let email = req.params["email"];
+
+    console.log(email)
+
+    pool.query('DELETE FROM spotify_user WHERE email = $1', [email], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+        }
+        else {
+            res.json({
+                body: "Success"
+            })
+        }
+    })
+});
+
+app.get('/getlikedsongs/:email', async function (req, res) {
+    let email = req.params["email"];
+    pool.query('SELECT song_id, song_name, artist_name,album_name, song_path FROM spotify_song WHERE song_id IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
+        if (results.rowCount == 0) {
+            res.json({
+                body: "Failed"
+            })
+        }
+        else {
+            var arr = []
+            for (var i = 0; i < results['rows'].length; i++) {
+                let jsonobj = {
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                    song_id: results['rows'][i]["song_id"],
+                }
+                arr.push(jsonobj)
+            }
+            res.json({
+                body: "Success",
+                data: arr,
+            })
+        }
+    })
+});
+
+app.post('/likesong', async function (req, res) {
+    let email = req.body["email"];
+    let song_id = req.body["song_id"];
+    pool.query('INSERT INTO spotify_liked_songs (email, song_id) VALUES ($1, $2)', [email, song_id], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            res.json({
+                body: "Success",
+            })
+        }
+    })
+});
+app.get('/search/:keyword/:email', async function (req, res) {
+    let keyword = req.params["keyword"];
+    let email = req.params["email"];
+    pool.query(`SELECT * FROM spotify_song WHERE song_name LIKE '${keyword}%'`, (error, results) => {
+        console.log(results)
+        if (results.rowCount == 0) {
+            res.json({
+                body: "Failed"
+            })
+        }
+        else {
+            var arr = []
+
+            for (var i = 0; i < results['rows'].length; i++) {
+
+                let jsonobj = {
+                    song_id: results['rows'][i]["song_id"],
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                }
+                arr.push(jsonobj)
+            }
+            res.json({
+                body: "Success",
+                data: arr,
+            })
+        }
+    })
+});
+
+app.get('/getallsongs', async function (req, res) {
+    pool.query(`SELECT * FROM spotify_song`, (error, results) => {
+        console.log(results)
+        if (results.rowCount == 0) {
+            res.json({
+                body: "Failed"
+            })
+        }
+        else {
+            var arr = []
+
+            for (var i = 0; i < results['rows'].length; i++) {
+
+                let jsonobj = {
+                    song_id: results['rows'][i]["song_id"],
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                }
+                arr.push(jsonobj)
+            }
+            res.json({
+                body: "Success",
+                data: arr,
+            })
+        }
+    })
+});
+
+
+app.post('/unlikesong', async function (req, res) {
+    let email = req.body["email"];
+    let song_id = req.body["song_id"];
+    console.log(email, song_id)
+    pool.query('DELETE FROM spotify_liked_songs WHERE email = $1 AND song_id = $2', [email, song_id], (error, results) => {
+        if (error) {
+            res.json({
+                body: "Failed"
+            })
+            throw (error)
+        } else {
+            res.json({
+                body: "Success",
+            })
+        }
+    })
+});
+>>>>>>> Stashed changes
 
 //start your server on port 3001
 app.listen(5000, () => {

@@ -15,7 +15,12 @@
     "querystring": "^0.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< Updated upstream
     "react-scripts": "5.0.1",
+=======
+    "react-howler": "^5.2.0",
+    "react-scripts": "^5.0.1",
+>>>>>>> Stashed changes
     "web-vitals": "^2.1.4",
     "zlib": "^1.0.5"
   },
