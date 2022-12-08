@@ -79,7 +79,7 @@ export default function Search() {
     });
     setSongs(response.data.data);
   }
-  
+
   useEffect(() => {
     setCode(
       songs &&
