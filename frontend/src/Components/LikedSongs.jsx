@@ -24,41 +24,41 @@ function Song(props) {
   );
 }
 
-const initialValueOfSongs = [
-  {
-    songname: "On my way",
-    artistname: "Alan Walker",
-    Albumname: "On my way",
-    songlink:
-      "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0",
-  },
-  {
-    songname: "Aitebar",
-    artistname: "Abdullah Qureshi",
-    Albumname: "Aitebar",
-    songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
-  },
-  {
-    songname: "On my way 2",
-    artistname: "Alan Walker",
-    Albumname: "On my way",
-    songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
-  },
-  {
-    songname: "On my way 3",
-    artistname: "Alan Walker",
-    Albumname: "On my way",
-  },
-  {
-    songname: "On my way 4",
-    artistname: "Alan Walker",
-    Albumname: "On my way",
-  },
-];
+// const initialValueOfSongs = [
+//   {
+//     songname: "On my way",
+//     artistname: "Alan Walker",
+//     Albumname: "On my way",
+//     songlink:
+//       "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0",
+//   },
+//   {
+//     songname: "Aitebar",
+//     artistname: "Abdullah Qureshi",
+//     Albumname: "Aitebar",
+//     songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
+//   },
+//   {
+//     songname: "On my way 2",
+//     artistname: "Alan Walker",
+//     Albumname: "On my way",
+//     songlink: "https://dl.dropboxusercontent.com/s/rfz0s49idtk3rhl/Canon%20In%20D.mp3?dl=0"
+//   },
+//   {
+//     songname: "On my way 3",
+//     artistname: "Alan Walker",
+//     Albumname: "On my way",
+//   },
+//   {
+//     songname: "On my way 4",
+//     artistname: "Alan Walker",
+//     Albumname: "On my way",
+//   },
+// ];
 
 export default function LikedSongs() {
   const [selectedSong, setSelectedSong] = useState("");
-  const [songs, setSongs] = useState(initialValueOfSongs);
+  const [songs, setSongs] = useState("");
   const [play, setPlay] = useState(require("./playbutton.png"));
   const audio= useRef(new Audio(selectedSong.songlink));
   const [repeat, setRepeat]= useState(false);
