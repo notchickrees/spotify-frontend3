@@ -9,6 +9,7 @@ import './App.css';
 import Settings from "./Components/Settings";
 import LikedSongs from "./Components/LikedSongs";
 import CreateSong from "./Components/Createsong";
+import Search from "./Components/Search";
 
 const Main = () => {
   return (
@@ -22,6 +23,7 @@ const Main = () => {
         <Route path='/settings' element={<Settings/>}/>
         <Route path='/likedsongs' element={<LikedSongs/>}/>
         <Route path='/uploadsong' element={<CreateSong/>}/>
+        <Route path='/search' element= {<Search/>}/>
       </Routes>
     </BrowserRouter>
   );
