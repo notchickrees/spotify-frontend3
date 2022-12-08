@@ -65,8 +65,7 @@ export default function LikedSongs() {
   const [shuffle, setShuffle]= useState(false);
   const [repeatpng, setRepeatpng] =useState(require("./repeat.png"))
   const [shufflepng, setShufflepng] =useState(require("./shuffle.png"))
-
-  
+  const [likedpng, setLikedpng] =useState(require("./likefilled.png"))
 
   useEffect(() => {
     fetchdata();
@@ -110,8 +109,9 @@ export default function LikedSongs() {
     const length= songs.length;
     var index = songs.indexOf(selectedSong);
     if(repeat === true){
-      console.log("here")
-      setSelectedSong(songs[index])
+      audio.current.currentTime=0;
+      audio.current.play()
+      // setSelectedSong(songs[index])
     }
     else if(shuffle === true){
       var shuffle_index= Math.floor(Math.random()* length);
@@ -155,6 +155,20 @@ export default function LikedSongs() {
     else{
       setRepeat(false)
       setRepeatpng(require("./repeat.png"))
+    }
+  }
+
+  async function handleliked () {
+    if (likedpng == require("./likefilled.png")){
+      setLikedpng(require("./like.png"))
+      const data= {
+        email : sessionStorage.getItem("email"),
+        song_id : selectedSong.song_id
+      }
+      const response= await axios.post(`http://localhost:5000/unlike`, data)
+    }
+    else{
+      setLikedpng(require("./likefilled.png"))
     }
   }
 
@@ -208,7 +222,7 @@ export default function LikedSongs() {
           <img className="next" src={require("./next.png")} alt="" onClick= {handlenext}/>
           <img className="repeat" src={repeatpng} alt="" onClick={handlerepeat} />
           <div className="likefilled"/>
-          <img className="likefilled" src={require("./likefilled.png")} alt=""/>
+          <img className="likefilled" src={likedpng} alt="" onClick={handleliked}/>
         </div>
 
         <div className="footer_right">
