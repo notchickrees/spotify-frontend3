@@ -206,6 +206,8 @@ export default function LikedSongs() {
           {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
           <img className="next" src={require("./next.png")} alt="" onClick= {handlenext}/>
           <img className="repeat" src={repeatpng} alt="" onClick={handlerepeat} />
+          <div className="likefilled"/>
+          <img className="likefilled" src={require("./likefilled.png")} alt=""/>
         </div>
 
         <div className="footer_right">
