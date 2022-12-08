@@ -75,7 +75,6 @@ export default function Search() {
 
 
   async function handleSearch(e) {
-    e.preventDefault();
     if (!search) {
       alert("Search cannot be empty");
     } else {
@@ -83,6 +82,7 @@ export default function Search() {
       const response = await axios.get(
         `http://localhost:5000/search/${keyword}`
       );
+      console.log(response)
       if (response.data.body == "Failure") {
         setMessage("Could not find the song");
       } else {

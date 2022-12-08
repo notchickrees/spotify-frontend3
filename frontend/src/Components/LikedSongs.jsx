@@ -60,33 +60,33 @@ export default function LikedSongs() {
   const [selectedSong, setSelectedSong] = useState("");
   const [songs, setSongs] = useState("");
   const [play, setPlay] = useState(require("./playbutton.png"));
-  const audio= useRef(new Audio(selectedSong.songlink));
-  const [repeat, setRepeat]= useState(false);
-  const [shuffle, setShuffle]= useState(false);
-  const [repeatpng, setRepeatpng] =useState(require("./repeat.png"))
-  const [shufflepng, setShufflepng] =useState(require("./shuffle.png"))
-  const [likedpng, setLikedpng] =useState(require("./likefilled.png"))
+  const audio = useRef(new Audio(selectedSong.songlink));
+  const [repeat, setRepeat] = useState(false);
+  const [shuffle, setShuffle] = useState(false);
+  const [repeatpng, setRepeatpng] = useState(require("./repeat.png"))
+  const [shufflepng, setShufflepng] = useState(require("./shuffle.png"))
+  const [likedpng, setLikedpng] = useState(require("./likefilled.png"))
 
   useEffect(() => {
     fetchdata();
   }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     audio.current.addEventListener('ended', handleEnd)
-    
-    function handleEnd(){
+
+    function handleEnd() {
       handlenext();
     }
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("fired")
     // audio.current=new Audio(selectedSong.songlink);
     audio.current.pause();
-    audio.current.src= selectedSong.songlink;
+    audio.current.src = selectedSong.songlink;
     audio.current.load()
     callMySound();
-  },[selectedSong]);
+  }, [selectedSong]);
 
   const callMySound = () => {
     audio.current.play();
@@ -94,80 +94,80 @@ export default function LikedSongs() {
     setPlay(require("./pause.png"));
   };
 
-  const handleplay= ()=>{
-    if(play===require("./pause.png")){
+  const handleplay = () => {
+    if (play === require("./pause.png")) {
       audio.current.pause()
       setPlay(require("./playbutton.png"))
     }
-    else{
+    else {
       audio.current.play()
       setPlay(require("./pause.png"))
     }
   }
 
   const handlenext = () => {
-    const length= songs.length;
+    const length = songs.length;
     var index = songs.indexOf(selectedSong);
-    if(repeat === true){
-      audio.current.currentTime=0;
+    if (repeat === true) {
+      audio.current.currentTime = 0;
       audio.current.play()
       // setSelectedSong(songs[index])
     }
-    else if(shuffle === true){
-      var shuffle_index= Math.floor(Math.random()* length);
+    else if (shuffle === true) {
+      var shuffle_index = Math.floor(Math.random() * length);
       setSelectedSong(songs[shuffle_index]);
     }
-    else if(index === length - 1){
+    else if (index === length - 1) {
       setSelectedSong(songs[0]);
     }
-    else{
+    else {
       setSelectedSong(songs[index + 1])
     }
   }
 
   const handleprevious = () => {
-    const length= songs.length;
+    const length = songs.length;
     var index = songs.indexOf(selectedSong);
-    if(index == 0){
-      setSelectedSong(songs[index-1]);
+    if (index == 0) {
+      setSelectedSong(songs[index - 1]);
     }
-    else{
+    else {
       setSelectedSong(songs[index - 1])
     }
   }
 
-  const handleshuffle = ()=> {
-    if(shuffle == false){
+  const handleshuffle = () => {
+    if (shuffle == false) {
       setShuffle(true)
       setShufflepng(require("./shuffle2.png"))
     }
-    else{
+    else {
       setShuffle(false)
       setShufflepng(require("./shuffle.png"))
     }
   }
 
   const handlerepeat = () => {
-    if(repeat == false){
+    if (repeat == false) {
       setRepeat(true)
       setRepeatpng(require("./repeat2.png"))
     }
-    else{
+    else {
       setRepeat(false)
       setRepeatpng(require("./repeat.png"))
     }
   }
 
-  async function handleliked () {
-    if (likedpng == require("./likefilled.png")){
+  async function handleliked() {
+    if (likedpng == require("./likefilled.png")) {
       setLikedpng(require("./like.png"))
-      const data= {
-        email : sessionStorage.getItem("email"),
-        song_id : selectedSong.song_id
+      const data = {
+        email: sessionStorage.getItem("email"),
+        song_id: selectedSong.song_id
       }
-      const response= await axios.post(`http://localhost:5000/unlike`, data)
+      const response = await axios.post('http://localhost:5000/unlikesong', data)
     }
-    else{
+    else {
       setLikedpng(require("./likefilled.png"))
     }
   }
@@ -215,13 +215,13 @@ export default function LikedSongs() {
         </div>
 
         <div className="footer_center">
-          <img className="shuffle" src={shufflepng} alt="" onClick={handleshuffle}/>
-          <img className="back" src={require("./back.png")} alt="" onClick= {handleprevious} />
-          <img className="playbutton" src={play} alt="" onClick={handleplay}/>
-          <img className="next" src={require("./next.png")} alt="" onClick= {handlenext}/>
+          <img className="shuffle" src={shufflepng} alt="" onClick={handleshuffle} />
+          <img className="back" src={require("./back.png")} alt="" onClick={handleprevious} />
+          <img className="playbutton" src={play} alt="" onClick={handleplay} />
+          <img className="next" src={require("./next.png")} alt="" onClick={handlenext} />
           <img className="repeat" src={repeatpng} alt="" onClick={handlerepeat} />
-          <div className="likefilled"/>
-          <img className="likefilled" src={likedpng} alt="" onClick={handleliked}/>
+          <div className="likefilled" />
+          <img className="likefilled" src={likedpng} alt="" onClick={handleliked} />
         </div>
 
         <div className="footer_right">
