@@ -2,6 +2,7 @@ import React from "react";
 import Sidebar from "./Sidebar";
 import axios from "axios";
 import { useState, useEffect } from "react";
+import "./LikedSongs.css";
 
 function Song(props) {
   function handleSong(e) {
