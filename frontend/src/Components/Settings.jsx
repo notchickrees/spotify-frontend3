@@ -74,6 +74,13 @@ export default function Settings() {
         </button>
       </div>
       <div className="text-center">
+        <Link to="/deletesong">
+          <button type="button" id="Register" style={buttonstyle}>
+            Delete Song
+          </button>
+        </Link>
+      </div>
+      <div className="text-center">
         <button type="button" id="Register" style={buttonstyle} onClick= {handleLogout}>
             Logout
         </button>
