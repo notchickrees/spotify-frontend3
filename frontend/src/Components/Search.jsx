@@ -18,6 +18,13 @@ function Song(props) {
           <div className="subtitle">{props.song.artistname}</div>
         </h5>
         <div className="album">{props.song.Albumname}</div>
+        <div className="likefilled" />
+        <img
+          className="likefilled"
+          src={props.likedpng}
+          alt=""
+          onClick={props.handleLiked}
+        />
       </li>
     </div>
   );
@@ -30,6 +37,8 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [message, setMessage] = useState("");
   const [songs, setSongs] = useState("");
+  const [likedpng, setLikedpng] = useState(require("./like.png"));
+  const [selectedSong, setSelectedSong] = useState("");
 
   useEffect(() => {
     if (sessionStorage.getItem("usertype") === "artist") {
@@ -38,15 +47,28 @@ export default function Search() {
     }
   }, []);
 
+  async function handleLiked() {
+    if (likedpng == require("./likefilled.png")) {
+      setLikedpng(require("./like.png"));
+      const data = {
+        email: sessionStorage.getItem("email"),
+        song_id: selectedSong.song_id,
+      };
+      const response = await axios.post(`http://localhost:5000/unlike`, data);
+    } else {
+      setLikedpng(require("./likefilled.png"));
+    }
+  }
+
   async function handleSearch(e) {
     e.preventDefault();
     if (!search) {
       alert("Search cannot be empty");
     } else {
-      const data = {
-        search: search,
-      };
-      const response = await axios.post("http://localhost:5000/search", data);
+      const keyword = search;
+      const response = await axios.get(
+        `http://localhost:5000/search/${keyword}`
+      );
       if (response.data.body == "Failure") {
         setMessage("Could not find the song");
       } else {
@@ -60,10 +82,27 @@ export default function Search() {
       }
     }
   }
-  async function handleLiked(song){
-    song["liked"]= true;
-    var index= songs.indexOf(song);
-    songs[index]= song;
+  async function handleLiked(song) {
+    if (likedpng == require("./likefilled.png")) {
+        setLikedpng(require("./like.png"));
+        const data = {
+            email: sessionStorage.getItem("email"),
+            song_id: selectedSong.song_id,
+        };
+        const response = await axios.post(`http://localhost:5000/unlike`, data);
+    } else {
+        const data = {
+            email: sessionStorage.getItem("email"),
+            song_id: song.song_id,
+        };
+        const response = await axios.post(`http://localhost:5000/likesong`, data);
+        setLikedpng(require("./likefilled.png"));
+    }
+
+    // song["liked"] = true;
+    // setSelectedSong(song);
+    // var index = songs.indexOf(song);
+    // songs[index] = song;
   }
 
   return (
@@ -99,6 +138,7 @@ export default function Search() {
                   key={song.count}
                   song={song}
                   handleLiked={handleLiked}
+                  likedpng={likedpng}
                 />
               ))}
           </div>
