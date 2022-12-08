@@ -6,18 +6,13 @@ import "./LikedSongs.css";
 
 function Song(props) {
 
-    useEffect(() =>{
-        if (props.song.liked == true){
-            setLikedpng(require("./likefilled.png"))
-        }
-    }, [])
-  
-    function handleSong(e) {
-    e.preventDefault();
-    props.handleLiked(props.song);
-  }
+  useEffect(() => {
+    if (props.song.liked == true) {
+      setLikedpng(require("./likefilled.png"))
+    }
+  }, [])
 
-  const [likedpng, setLikedpng] = require ("./like.png");
+  const [likedpng, setLikedpng] = useState(require("./like.png"));
 
   async function handleLiked() {
     if (likedpng == require("./likefilled.png")) {
@@ -39,7 +34,7 @@ function Song(props) {
 
   return (
     <div>
-      <li className="songItem" onClick={handleSong}>
+      <li className="songItem">
         <span>{props.song.count}</span>
         <h5>
           {props.song.songname}
@@ -65,6 +60,7 @@ export default function Search() {
   const [search, setSearch] = useState("");
   const [message, setMessage] = useState("");
   const [songs, setSongs] = useState("");
+  const [code, setCode] = useState("")
 
   useEffect(() => {
     if (sessionStorage.getItem("usertype") === "artist") {
@@ -73,8 +69,21 @@ export default function Search() {
     }
   }, []);
 
+  useEffect(() => {
+    setCode(
+      songs &&
+      songs.map((song) => (
+        <Song
+          key={song.count}
+          song={song}
+        />
+      ))
+    )
+  }, [songs])
+
 
   async function handleSearch(e) {
+    setMessage("")
     if (!search) {
       alert("Search cannot be empty");
     } else {
@@ -83,16 +92,19 @@ export default function Search() {
         `http://localhost:5000/search/${keyword}`
       );
       console.log(response)
-      if (response.data.body == "Failure") {
+      if (response.data.body == "Failed") {
         setMessage("Could not find the song");
+        setSearch("");
+        setSongs("")
       } else {
-        setSongs(response.data.data);
+        // setSongs(response.data.data);
         var count = 1;
-        songs.forEach((song) => {
+        response.data.data.forEach((song) => {
           song["count"] = count;
           count++;
         });
-        setSongs(songs);
+        setSongs(response.data.data);
+        console.log(songs);
       }
     }
   }
@@ -124,15 +136,9 @@ export default function Search() {
               </div>
             </div>
             <h3 className="my-5">{message}</h3>
-              <div className="listsongs">
-                {songs &&
-                  songs.map((song) => (
-                    <Song
-                      key={song.count}
-                      song={song}
-                    />
-                  ))}
-              </div>
+            <div className="listsongs">
+              {code}
+            </div>
           </div>
         </div>
       </div>
