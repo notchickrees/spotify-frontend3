@@ -244,8 +244,9 @@ app.post('/likesong', async function (req, res) {
         }
     })
 });
-app.get('/search/:keyword', async function (req, res) {
+app.get('/search/:keyword/:email', async function (req, res) {
     let keyword = req.params["keyword"];
+    let email = req.params["email"];
     pool.query(`SELECT * FROM spotify_song WHERE song_name LIKE '${keyword}%'`, (error, results) => {
         console.log(results)
         if (results.rowCount == 0) {
@@ -255,7 +256,9 @@ app.get('/search/:keyword', async function (req, res) {
         }
         else {
             var arr = []
+
             for (var i = 0; i < results['rows'].length; i++) {
+
                 let jsonobj = {
                     song_id: results['rows'][i]["song_id"],
                     songname: results['rows'][i]["song_name"],

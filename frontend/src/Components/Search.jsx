@@ -21,7 +21,7 @@ function Song(props) {
         email: sessionStorage.getItem("email"),
         song_id: props.song.song_id,
       };
-      const response = await axios.post(`http://localhost:5000/unlike`, data);
+      const response = await axios.post(`http://localhost:5000/unlikesong`, data);
     } else {
       const data = {
         email: sessionStorage.getItem("email"),
@@ -88,18 +88,26 @@ export default function Search() {
       alert("Search cannot be empty");
     } else {
       const keyword = search;
+      const email = sessionStorage.getItem("email")
       const response = await axios.get(
-        `http://localhost:5000/search/${keyword}`
+        `http://localhost:5000/search/${keyword}/${email}`
       );
-      console.log(response)
+      const response2 = await axios.get(`http://localhost:5000/getlikedsongs/${email}`);
+      console.log(response2.data.data)
       if (response.data.body == "Failed") {
         setMessage("Could not find the song");
         setSearch("");
         setSongs("")
       } else {
-        // setSongs(response.data.data);
         var count = 1;
         response.data.data.forEach((song) => {
+          for (var i = 0; i < response2.data.data.length; i++) {
+            console.log("here")
+            if (response2.data.data[i].songname == song.songname) {
+              console.log("true")
+              song["liked"] = true;
+            }
+          }
           song["count"] = count;
           count++;
         });
