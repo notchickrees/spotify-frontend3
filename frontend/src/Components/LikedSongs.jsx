@@ -218,7 +218,6 @@ export default function LikedSongs() {
           <img className="shuffle" src={shufflepng} alt="" onClick={handleshuffle}/>
           <img className="back" src={require("./back.png")} alt="" onClick= {handleprevious} />
           <img className="playbutton" src={play} alt="" onClick={handleplay}/>
-          {/* <img className="pause" src={require("./pause.png")} alt=""/> */}
           <img className="next" src={require("./next.png")} alt="" onClick= {handlenext}/>
           <img className="repeat" src={repeatpng} alt="" onClick={handlerepeat} />
           <div className="likefilled"/>
