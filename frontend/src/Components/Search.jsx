@@ -71,15 +71,25 @@ export default function Search() {
   }, []);
 
   async function fetchdata() {
+    const email = sessionStorage.getItem("email")
     const response = await axios.get(`http://localhost:5000/getallsongs`);
-
+    const response2 = await axios.get(`http://localhost:5000/getlikedsongs/${email}`);
     var count = 1;
     response.data.data.forEach((song) => {
+      if (response2.data.data) {
+        for (var i = 0; i < response2.data.data.length; i++) {
+          if (response2.data.data[i].songname == song.songname) {
+            console.log("true")
+            song["liked"] = true;
+          }
+        }
+      }
       song["count"] = count;
       count++;
     });
     setSongs(response.data.data);
   }
+
   useEffect(() => {
     setCode(
       songs &&
@@ -115,7 +125,6 @@ export default function Search() {
         response.data.data.forEach((song) => {
           if (response2.data.data) {
             for (var i = 0; i < response2.data.data.length; i++) {
-              console.log("here")
               if (response2.data.data[i].songname == song.songname) {
                 console.log("true")
                 song["liked"] = true;
@@ -126,7 +135,7 @@ export default function Search() {
           count++;
         });
         setSongs(response.data.data);
-        console.log(songs);
+        console.log("songs:", songs);
       }
     }
   }
