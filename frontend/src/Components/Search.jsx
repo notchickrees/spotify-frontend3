@@ -61,7 +61,6 @@ export default function Search() {
   }
 
   async function handleSearch(e) {
-    e.preventDefault();
     if (!search) {
       alert("Search cannot be empty");
     } else {
@@ -69,6 +68,7 @@ export default function Search() {
       const response = await axios.get(
         `http://localhost:5000/search/${keyword}`
       );
+      console.log(response)
       if (response.data.body == "Failure") {
         setMessage("Could not find the song");
       } else {
@@ -84,19 +84,19 @@ export default function Search() {
   }
   async function handleLiked(song) {
     if (likedpng == require("./likefilled.png")) {
-        setLikedpng(require("./like.png"));
-        const data = {
-            email: sessionStorage.getItem("email"),
-            song_id: selectedSong.song_id,
-        };
-        const response = await axios.post(`http://localhost:5000/unlike`, data);
+      setLikedpng(require("./like.png"));
+      const data = {
+        email: sessionStorage.getItem("email"),
+        song_id: selectedSong.song_id,
+      };
+      const response = await axios.post(`http://localhost:5000/unlike`, data);
     } else {
-        const data = {
-            email: sessionStorage.getItem("email"),
-            song_id: song.song_id,
-        };
-        const response = await axios.post(`http://localhost:5000/likesong`, data);
-        setLikedpng(require("./likefilled.png"));
+      const data = {
+        email: sessionStorage.getItem("email"),
+        song_id: song.song_id,
+      };
+      const response = await axios.post(`http://localhost:5000/likesong`, data);
+      setLikedpng(require("./likefilled.png"));
     }
 
     // song["liked"] = true;
