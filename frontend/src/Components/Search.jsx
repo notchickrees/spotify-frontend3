@@ -47,10 +47,10 @@ export default function Search() {
         search: search,
       };
       const response = await axios.post("http://localhost:5000/search", data);
-      if (response.data.body == "failure") {
+      if (response.data.body == "Failure") {
         setMessage("Could not find the song");
       } else {
-        const songs = response.data;
+        setSongs(response.data.data);
         var count = 1;
         songs.forEach((song) => {
           song["count"] = count;
