@@ -277,6 +277,36 @@ app.get('/search/:keyword/:email', async function (req, res) {
     })
 });
 
+app.get('/getallsongs', async function (req, res) {
+    pool.query(`SELECT * FROM spotify_song`, (error, results) => {
+        console.log(results)
+        if (results.rowCount == 0) {
+            res.json({
+                body: "Failed"
+            })
+        }
+        else {
+            var arr = []
+
+            for (var i = 0; i < results['rows'].length; i++) {
+
+                let jsonobj = {
+                    song_id: results['rows'][i]["song_id"],
+                    songname: results['rows'][i]["song_name"],
+                    artistname: results['rows'][i]["artist_name"],
+                    Albumname: results['rows'][i]["album_name"],
+                    songlink: results['rows'][i]["song_path"],
+                }
+                arr.push(jsonobj)
+            }
+            res.json({
+                body: "Success",
+                data: arr,
+            })
+        }
+    })
+});
+
 app.post('/unlikesong', async function (req, res) {
     let email = req.body["email"];
     let song_id = req.body["song_id"];
