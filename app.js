@@ -1,7 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
-const { pool } = require("./dbConfig");
+const { pool } = require("./server/dbConfig");
 const bcrypt = require("bcrypt");
 const { response, request } = require('express');
 const app = express();
