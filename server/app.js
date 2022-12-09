@@ -266,7 +266,7 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
 
 app.get('/getlikedsongs/:email', async function (req, res) {
     let email = req.params["email"];
-    pool.query('SELECT song_id, song_name, artist_name,album_name, song_path FROM spotify_song WHERE song_id IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
+    pool.query('SELECT song_id, song_name, username, album_name, song_path FROM spotify_song WHERE song_id IN (SELECT song_id FROM spotify_liked_songs WHERE email = $1 )', [email], (error, results) => {
         if (results.rowCount == 0) {
             res.json({
                 body: "Failed"
@@ -277,7 +277,7 @@ app.get('/getlikedsongs/:email', async function (req, res) {
             for (var i = 0; i < results['rows'].length; i++) {
                 let jsonobj = {
                     songname: results['rows'][i]["song_name"],
-                    artistname: results['rows'][i]["artist_name"],
+                    artistname: results['rows'][i]["username"],
                     Albumname: results['rows'][i]["album_name"],
                     songlink: results['rows'][i]["song_path"],
                     song_id: results['rows'][i]["song_id"],
@@ -326,7 +326,7 @@ app.get('/search/:keyword/:email', async function (req, res) {
                 let jsonobj = {
                     song_id: results['rows'][i]["song_id"],
                     songname: results['rows'][i]["song_name"],
-                    artistname: results['rows'][i]["artist_name"],
+                    artistname: results['rows'][i]["username"],
                     Albumname: results['rows'][i]["album_name"],
                     songlink: results['rows'][i]["song_path"],
                 }
@@ -356,7 +356,7 @@ app.get('/getallsongs', async function (req, res) {
                 let jsonobj = {
                     song_id: results['rows'][i]["song_id"],
                     songname: results['rows'][i]["song_name"],
-                    artistname: results['rows'][i]["artist_name"],
+                    artistname: results['rows'][i]["username"],
                     Albumname: results['rows'][i]["album_name"],
                     songlink: results['rows'][i]["song_path"],
                 }
