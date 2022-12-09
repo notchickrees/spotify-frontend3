@@ -396,8 +396,6 @@ app.get('/*', function (req, res) {
 
 //start your server on port 3001
 
-const {PORT} = process.env.PORT;
-
-app.listen(PORT, () => {
-    console.log('Server Listening on port', PORT);
+app.listen(process.env.PORT, () => {
+    console.log('Server Listening on port', process.env.PORT);
 });
