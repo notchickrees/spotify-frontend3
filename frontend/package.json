@@ -1,22 +1,9 @@
 {
-  "main": "./server/app.js",
-  "engines": {
-    "npm": "7.0.0",
-    "node": "16.0.0"
-  },
+  "name": "spotify-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:5000/",
   "dependencies": {
-    "@emotion/react": "^11.10.5",
-    "@emotion/styled": "^11.10.5",
-    "@material-ui/core": "^4.12.4",
-    "@material-ui/icons": "^4.11.3",
-    "@mui/icons-material": "^5.10.15",
-    "@mui/material": "^5.10.15",
-    "bcrypt": "^5.1.0",
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "morgan": "^1.10.0",
-    "pg": "^8.8.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -34,8 +21,7 @@
     "zlib": "^1.0.5"
   },
   "scripts": {
-    "go": "react-scripts start",
-    "start": "node ./server/app.js && npm build",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
