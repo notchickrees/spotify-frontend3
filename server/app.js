@@ -16,7 +16,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use(express.static(path.resolve(__dirname, "../build")));
+// app.use(express.static(path.resolve(__dirname, "../build")));
 
 app.post('/loginform', function (req, res) {
     let email = req.body["email"];
@@ -390,9 +390,9 @@ app.post('/unlikesong', async function (req, res) {
     })
 });
 
-app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../build', 'frontend/public/index.html'));
-  });
+// app.get('/*', function (req, res) {
+//     res.sendFile(path.join(__dirname, '../build', 'frontend/public/index.html'));
+//   });
 
 //start your server on port 3001
 
