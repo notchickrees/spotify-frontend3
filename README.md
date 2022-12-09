@@ -7,10 +7,10 @@ Log Out ✅
 Update Password ✅
 Play a song ✅
 Favourite ✅
-Next/Previous
+Next/Previous ✅
 Pause/Play ✅
-Shuffle/Repeat
-Song Search 
+Shuffle/Repeat ✅
+Song Search ✅
 Upload Music ✅
 Upload Metadata ✅
 Delete a Song ✅

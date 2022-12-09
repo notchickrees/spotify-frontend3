@@ -60,6 +60,20 @@
     margin-left: 120px;
 }
 
+.like{
+    height: 3vh;
+    min-height:60px;
+    min-width: fit-content;
+    margin-left: 5px;
+}
+
+.likefilled{
+    height: 1vh;
+    min-height:55px;
+    min-width: fit-content;
+    margin-left: 5px;
+}
+
 .footer_right{
     flex:0.3;
     padding: 0 100px;
@@ -82,5 +96,6 @@
 .footer_songInfo{
     font-size:12px;
     font-family:light;
+    margin-top: 5px;
 }
 
