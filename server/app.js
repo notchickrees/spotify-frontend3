@@ -391,7 +391,7 @@ app.post('/unlikesong', async function (req, res) {
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+    res.sendFile(path.join(__dirname, '../build', 'frontend/public/index.html'));
   });
 
 //start your server on port 3001
