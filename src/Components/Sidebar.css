@@ -1,0 +1,29 @@
+.sidebar{
+    height: 800vh;
+    flex: 0.2;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-width: 230px;
+    background-color: #040404;
+}
+
+.sidebar_logo{
+    height: 80px;
+    width:165px;
+    padding: 10px;
+}
+
+.sidebar_title{
+    margin-left: 15px;
+    padding: 5px;
+    font-size:12px;
+}
+
+.sidebar_title > a{
+    color: white;
+    text-decoration: none;
+}
+.like{
+    margin-top: none;
+}

@@ -1,0 +1,101 @@
+.footer{
+    position: fixed;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0;
+    height: 80px;
+    width: 100%;
+    background-color: #282828;
+    padding: 15px;
+}
+
+.footer_left{
+    flex:0.3;
+    display:flex;
+    color:white;
+}
+
+.footer_center{
+    flex:0.4;
+    padding: 0 100px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 300px;
+}
+
+.playbutton{
+    height: 4vh;
+    min-height:150px;
+    min-width: fit-content;
+}
+
+.back{
+    height: 4vh;
+    min-height:50px;
+    min-width: fit-content;
+}
+
+.next{
+    height: 4vh;
+    min-height:50px;
+    min-width: fit-content;
+}
+.repeat{
+    height: 4vh;
+    min-height:70px;
+    min-width: fit-content;
+}
+.shuffle{
+    height: 4vh;
+    min-height:70px;
+    min-width: fit-content;
+}
+
+.volume{
+    height: 4vh;
+    min-height:70px;
+    min-width: fit-content;
+    margin-left: 120px;
+}
+
+.like{
+    height: 3vh;
+    min-height:60px;
+    min-width: fit-content;
+    margin-left: 5px;
+}
+
+.likefilled{
+    height: 1vh;
+    min-height:55px;
+    min-width: fit-content;
+    margin-left: 5px;
+}
+
+.footer_right{
+    flex:0.3;
+    padding: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color:white;
+    max-width: 300px;
+}
+
+.footer_albumLogo{
+    margin-top:0px;
+    height:60px;
+    width: 60px;
+    margin-right: 20px;
+    object-fit: contain;
+    padding-bottom: 5px;
+}
+
+.footer_songInfo{
+    font-size:12px;
+    font-family:light;
+    margin-top: 5px;
+}
+

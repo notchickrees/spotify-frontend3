@@ -1,0 +1,13 @@
+
+@font-face{
+  font-family: "Light";
+  src: local("CircularSpotifyText-Light"),
+  url("./Fonts/CircularSpotifyText-Light.otf") format("opentype");
+}
+
+@font-face{
+  font-family: "Bold";
+  src: local("CircularSpotifyText-Bold"),
+  url("./Fonts/CircularSpotifyText-Bold.otf") format("opentype");
+}
+
