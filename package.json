@@ -23,8 +23,8 @@
     "path": "^0.12.7",
     "pg": "^8.8.0",
     "querystring": "^0.2.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-howler": "^5.2.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4",
@@ -32,7 +32,7 @@
   },
   "scripts": {
     "go": "react-scripts start",
-    "start": "node ./server/app.js && npm i react-dom && npm build",
+    "start": "node ./server/app.js && npm i react-dom react && npm build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
