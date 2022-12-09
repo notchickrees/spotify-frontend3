@@ -356,7 +356,7 @@ app.get('/getallsongs', async function (req, res) {
                 let jsonobj = {
                     song_id: results['rows'][i]["song_id"],
                     songname: results['rows'][i]["song_name"],
-                    artistname: results['rows'][i]["artist_name"],
+                    artistname: results['rows'][i]["username"],
                     Albumname: results['rows'][i]["album_name"],
                     songlink: results['rows'][i]["song_path"],
                 }
