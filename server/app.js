@@ -16,6 +16,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(express.static(path.resolve(__dirname, "../build")));
+
 app.post('/loginform', function (req, res) {
     let email = req.body["email"];
     let password = req.body["password"];
@@ -388,7 +390,14 @@ app.post('/unlikesong', async function (req, res) {
     })
 });
 
+app.get('/*', function (req, res) {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+
 //start your server on port 3001
-app.listen(5000, () => {
-    console.log('Server Listening on port 5000');
+
+const {PORT} = process.env.PORT;
+
+app.listen(PORT, () => {
+    console.log('Server Listening on port', PORT);
 });
