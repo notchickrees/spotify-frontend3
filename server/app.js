@@ -16,6 +16,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+const API_URL =
+  process.env.NODE_ENV === "production"
+    ? "YOUR_APP_URL
+    : "http://localhost:5000";
+
 app.post('/loginform', function (req, res) {
     let email = req.body["email"];
     let password = req.body["password"];
@@ -389,6 +394,10 @@ app.post('/unlikesong', async function (req, res) {
 });
 
 //start your server on port 3001
-app.listen(5000, () => {
-    console.log('Server Listening on port 5000');
-});
+// app.listen(5000, () => {
+//     console.log('Server Listening on port 5000');
+// });
+
+app.listen(process.env.PORT || 5000, () => {
+    console.log(`server has started on port ${process.env.PORT || 5000}`)
+})
