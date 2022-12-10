@@ -170,7 +170,11 @@ app.post('/uploadsong', async function (req, res) {
     let album_name = req.body["albumName"];
     let song_path = req.body["songPath"];
 
-    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
+    console.log(username);
+    let new_username = username.split('%').join('');
+    console.log(new_username);
+
+    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, new_username, song_path], (error, results) => {
         if (error) {
             res.json({
                 body: "Failed"
