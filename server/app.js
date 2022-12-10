@@ -250,7 +250,7 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
             })
         }
         else {
-            let song_id = results['rows'][1]['song_id']
+            let song_id = results['rows'][0]['song_id']
             console.log(song_id)
             pool.query('DELETE FROM spotify_album WHERE song_id = $1', [song_id], (error, results) => {
                 if (error) {
