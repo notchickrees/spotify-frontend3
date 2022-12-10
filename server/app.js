@@ -143,7 +143,7 @@ app.post('/updatepassword', async function (req, res) {
                         body: "Failed"
                     })
                 } else {
-                    pool.query('UPDATE spotify_user SET password = $1 WHERE email = $2', [hashedPassword, email], (error, results) => {
+                    pool.query('UPDATE spotify_user SET password = $1 WHERE email = $2', [hashedPassword, username], (error, results) => {
                         if (error) {
                             res.json({
                                 body: "Failed"
