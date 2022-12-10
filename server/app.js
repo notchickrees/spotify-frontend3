@@ -261,7 +261,7 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
                 }
                 else {
                     console.log("deleted from album");
-                    pool.query('DELETE FROM spotify_liked_song WHERE song_id = $1', [song_id], (error, results) => {
+                    pool.query('DELETE FROM spotify_liked_songs WHERE song_id = $1', [song_id], (error, results) => {
                         if (error) {
                             console.log(error)
                             res.json({
