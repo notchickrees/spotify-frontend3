@@ -89,7 +89,7 @@ app.post('/register', async function (req, res) {
             throw (error)
         } else {
             if (usertype == "artist") {
-                let artist_name = username + "_artist";
+                let artist_name = username.split(' ').join('') + "_artist";
                 pool.query('INSERT INTO spotify_artist (username, artist_name) VALUES ($1, $2)', [username, artist_name], (error, results) => {
                     if (error) {
                         res.json({
