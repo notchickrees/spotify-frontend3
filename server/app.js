@@ -229,6 +229,7 @@ app.delete('/settings/:email', async function (req, res) {
             res.json({
                 body: "Failed"
             })
+            console.log(error);
         }
         else {
             res.json({
