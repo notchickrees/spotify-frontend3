@@ -37,7 +37,7 @@ function UpdatePassword() {
       };
       console.log(data);
       const response = await axios.post(
-        "http://localhost:5000/updatepassword",
+        "https://spotify-clone-group2.herokuapp.com/updatepassword",
         data
       );
       // console.log("reponse:", response.data);
