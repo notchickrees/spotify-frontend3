@@ -170,24 +170,24 @@ app.post('/uploadsong', async function (req, res) {
     let album_name = req.body["albumName"];
     let song_path = req.body["songPath"];
 
-    console.log("Username: ", username);
-    console.log("Artist Name: ", artist_name);
-    let new_username = username.split('%').join('');
-    console.log(new_username);
+    let new_artist_name = artist_name.split('%').join('');
+    console.log(new_artist_name);
 
-    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, new_username + "_artist", album_name, new_username, song_path], (error, results) => {
+    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, new_artist_name + "_artist", album_name, username, song_path], (error, results) => {
         if (error) {
             res.json({
                 body: "Failed"
             })
+            console.log(error)
             throw (error)
         } else {
-            pool.query('INSERT INTO spotify_album (album_name, song_id, display_name) VALUES ($1, (select song_id from spotify_song where song_name = $2 and username = $3), $4)', [album_name, song_name, new_username, new_username + "_artist"], (error, results) => {
+            pool.query('INSERT INTO spotify_album (album_name, song_id, display_name) VALUES ($1, (select song_id from spotify_song where song_name = $2 and username = $3), $4)', [album_name, song_name, username, new_artist_name + "_artist"], (error, results) => {
                 if (error) {
                     res.json({
                         body: "Failed"
                     })
-                    throw (error)
+                console.log(error)
+                throw (error)
                 } else {
                     console.log("SUCCESS")
                     res.json({
