@@ -261,7 +261,7 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
                 }
                 else {
                     console.log("deleted from album");
-                    pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
+                    pool.query('DELETE FROM spotify_liked_song WHERE song_id = $1', [song_id], (error, results) => {
                         if (error) {
                             console.log(error)
                             res.json({
@@ -269,9 +269,20 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
                             })
                         }
                         else {
-                            console.log("deleted")
-                            res.json({
-                                body: "Success"
+                            console.log("deleted from liked songs")
+                            pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
+                                if (error) {
+                                    console.log(error)
+                                    res.json({
+                                        body: "Failed"
+                                    })
+                                }
+                                else {
+                                    console.log("deleted")
+                                    res.json({
+                                        body: "Success"
+                                    })
+                                }
                             })
                         }
                     })
