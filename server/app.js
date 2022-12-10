@@ -243,30 +243,44 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
     console.log(new_email)
     console.log(new_song)
 
-    // pool.query('SELECT FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
-    //     if (results.rowCount == 0) {
-    //         res.json({
-    //             body: "Failed"
-    //         })
-    //     }
-    //     else {
-    //     }
-    // })
-    
-    pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
-        if (error) {
-            console.log(error)
+    pool.query('SELECT song_id FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
+        if (results.rowCount == 0) {
             res.json({
                 body: "Failed"
             })
         }
         else {
-            console.log("deleted")
-            res.json({
-                body: "Success"
+            let song_id = results['rows'][0]['song_id']
+            console.log(song_id)
+            pool.query('DELETE FROM spotify_album WHERE song_id = $1', [song_id], (error, results) => {
+                if (error) {
+                    console.log(error)
+                    res.json({
+                        body: "Failed"
+                    })
+                }
+                else {
+                    console.log("deleted from album");
+                    pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
+                        if (error) {
+                            console.log(error)
+                            res.json({
+                                body: "Failed"
+                            })
+                        }
+                        else {
+                            console.log("deleted")
+                            res.json({
+                                body: "Success"
+                            })
+                        }
+                    })
+                }
             })
         }
     })
+    
+    
     
 });
 
