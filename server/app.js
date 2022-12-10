@@ -195,23 +195,23 @@ app.post('/uploadsong', async function (req, res) {
     })
 });
 
-app.post('/deletesong', async function (req, res) {
+// app.post('/deletesong', async function (req, res) {
 
-    pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
-        if (error) {
-            res.json({
-                body: "Failed"
-            })
-            throw (error)
-        } else {
-            console.log("SUCCESS")
-            res.json({
-                body: "Success",
-                username: username
-            })
-        }
-    })
-});
+//     pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, artist_name, album_name, username, song_path], (error, results) => {
+//         if (error) {
+//             res.json({
+//                 body: "Failed"
+//             })
+//             throw (error)
+//         } else {
+//             console.log("SUCCESS")
+//             res.json({
+//                 body: "Success",
+//                 username: username
+//             })
+//         }
+//     })
+// });
 app.delete('/settings/:email', async function (req, res) {
 
     console.log("HELLO", req.body)
