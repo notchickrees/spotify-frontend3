@@ -241,6 +241,7 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
     let new_song = song.split('%').join('');
     let new_email = email.split('%').join('');
     console.log(new_email)
+    console.log(new_song)
 
     // pool.query('SELECT FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
     //     if (results.rowCount == 0) {
@@ -254,6 +255,7 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
     
     pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
         if (error) {
+            console.log(error)
             res.json({
                 body: "Failed"
             })
