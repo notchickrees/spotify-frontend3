@@ -242,29 +242,29 @@ app.delete('/deletesong/:email/:song', async function (req, res) {
     let new_email = email.split('%').join('');
     console.log(new_email)
 
-    pool.query('SELECT FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
-        if (results.rowCount == 0) {
+    // pool.query('SELECT FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
+    //     if (results.rowCount == 0) {
+    //         res.json({
+    //             body: "Failed"
+    //         })
+    //     }
+    //     else {
+    //     }
+    // })
+    
+    pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
+        if (error) {
             res.json({
                 body: "Failed"
             })
         }
         else {
-            pool.query('DELETE FROM spotify_song WHERE song_name = $1 and username = $2', [new_song, new_email], (error, results) => {
-                if (error) {
-                    res.json({
-                        body: "Failed"
-                    })
-                }
-                else {
-                    console.log("deleted")
-                    res.json({
-                        body: "Success"
-                    })
-                }
+            console.log("deleted")
+            res.json({
+                body: "Success"
             })
         }
     })
-
     
 });
 
