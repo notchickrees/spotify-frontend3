@@ -170,7 +170,7 @@ app.post('/uploadsong', async function (req, res) {
     let album_name = req.body["albumName"];
     let song_path = req.body["songPath"];
 
-    let new_artist_name = artist_name.split('%').join('');
+    let new_artist_name = artist_name.split(' ').join('');
     console.log(new_artist_name);
 
     pool.query('INSERT INTO spotify_song (song_name, artist_name, album_name, username, song_path) VALUES ($1, $2, $3, $4, $5)', [song_name, new_artist_name + "_artist", album_name, username, song_path], (error, results) => {
