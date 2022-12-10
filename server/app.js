@@ -152,8 +152,8 @@ app.post('/updatepassword', async function (req, res) {
                         else {
                             console.log(hashedPassword)
                             res.json({
-                                body: "Success",
-                                username: username,
+                                body: "Success"
+                                // username: username,
                             })
                         }
                     })
